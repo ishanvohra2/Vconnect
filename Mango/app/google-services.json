@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "839955781296",
+    "firebase_url": "https://mango-904bd.firebaseio.com",
+    "project_id": "mango-904bd",
+    "storage_bucket": "mango-904bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839955781296:android:ab41a65ff49de2d7",
+        "android_client_info": {
+          "package_name": "com.example.ishan.mango"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "839955781296-u0u7fuva40480bvoobg2jc60dfa4gb7i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ishan.mango",
+            "certificate_hash": "32a7292a50905563f4ef56d1784c9dde0d08ed7b"
+          }
+        },
+        {
+          "client_id": "839955781296-tq5f91e5s5bfa6niuqmojadodmdu7mpu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKJTBwQD5bwJYzHdHOFypFWpgywYqXIjM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "839955781296-tq5f91e5s5bfa6niuqmojadodmdu7mpu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
