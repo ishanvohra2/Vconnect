@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:text="Please enter a message to help us better understand the problem"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/report_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="12dp"
+        android:layout_weight="1"
+        android:background="@drawable/rounded_box"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:minLines="3"
+        android:padding="12dp" />
+
+    <Button
+        android:id="@+id/report_dialog_submit_btn"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:text="Submit" />
+</LinearLayout>

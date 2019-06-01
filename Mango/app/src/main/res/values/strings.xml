@@ -17,17 +17,36 @@
     <string name="btn_login">LOGIN</string>
     <string name="prompt_password">Please enter your password</string>
     <string name="btn_link_to_register">Not a member? Get registered in Firebase now!</string>
-    <string name="btn_link_to_login">Already registered. Login Me!</string>
+    <string name="btn_link_to_login">Already registered. Log Me in!</string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
     <string name="btn_forgot_password">Forgot your password?</string>
     <string name="btn_reset_password">Reset Password</string>
-    <string name="btn_back"><![CDATA[<< Back]]></string>
     <string name="hint_new_email">New Email</string>
     <string name="btn_change">Change</string>
     <string name="btn_send">Send</string>
     <string name="btn_remove">Remove</string>
     <string name="btn_sign_out">Sign Out</string>
     <string name="lbl_forgot_password">Forgot password?</string>
-    <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
+    <string name="forgot_password_msg">Please enter your email address corresponding to your account.</string>
     <string name="email_id">Email ID</string>
+    <string name="title_activity_reset">ResetActivity</string>
+
+
+    <string name="action_settings">Settings</string>
+    <string name="mango">Mango</string>
+    <string name="sample_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus convallis turpis nulla, sed tempor erat accumsan sit amet. Mauris eget feugiat metus. Ut id metus dui. Fusce accumsan velit sed justo sollicitudin elementum. Curabitur aliquet velit tellus, eget varius neque rhoncus a. Quisque ipsum ipsum, dictum eu ante ut, interdum convallis nisl. Cras porta congue mi, venenatis vulputate nunc molestie tincidunt. Morbi non justo elit.
+
+Sed vulputate a sapien et tempus. Duis bibendum sem in velit venenatis rhoncus. Praesent tempus justo nec pellentesque dignissim. Vivamus aliquet purus eu posuere finibus. Cras aliquam fermentum lobortis. Fusce venenatis risus id tortor posuere, quis porta nisl tempus. Nunc sollicitudin risus tellus, in suscipit orci blandit sollicitudin. Pellentesque id neque sed mi suscipit cursus eget eu neque. Nunc non augue sed quam sollicitudin gravida ac id massa. Proin sed dictum ante. Maecenas ut augue quis tellus ullamcorper malesuada vitae a libero. Duis posuere, diam nec eleifend facilisis, enim libero imperdiet lectus, eu pharetra ligula ipsum vitae felis. Praesent maximus porttitor semper. Donec at ipsum lorem.
+
+Curabitur sit amet tellus vehicula, vehicula libero vel, eleifend nisl. Mauris at ante vitae tellus convallis rutrum in a ex. Nullam tortor lacus, faucibus eu viverra in, semper sed nunc. Fusce scelerisque vestibulum sagittis. Vestibulum vel ornare nibh. Donec vitae dui sem. Mauris congue, eros eget tristique consequat, urna augue tincidunt sapien, sed gravida turpis urna eu eros. Nunc sodales aliquam euismod. Pellentesque mattis scelerisque est, eget ultricies odio elementum eget. Integer in mauris mattis, fringilla turpis quis, rutrum lorem. Nullam nibh diam, molestie fermentum tempus sodales, pretium sit amet mauris. Proin non diam scelerisque, finibus turpis venenatis, dapibus lacus. Sed iaculis urna vitae velit vulputate eleifend.
+
+Etiam tempus ac nulla non convallis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam tincidunt, nibh in tristique suscipit, ex nibh condimentum justo, in dignissim nibh dolor a lectus. Vestibulum eleifend volutpat tellus, vel efficitur odio sodales quis. Donec sed enim sapien. Phasellus tempor, purus quis maximus rhoncus, ex felis cursus urna, quis auctor libero risus vel magna. Etiam elementum risus lectus. Donec efficitur at nibh eu ullamcorper. Cras tempus aliquet nibh vitae efficitur. Nunc lobortis eleifend ipsum quis placerat. Quisque auctor egestas condimentum.
+
+Donec ullamcorper dictum blandit. Vestibulum porta leo vel volutpat malesuada. Aenean rutrum nunc orci, quis interdum enim vestibulum eget. Fusce mattis eu felis a fringilla. Vestibulum tristique aliquam sodales. Donec elementum quam et odio tincidunt lobortis efficitur eu metus. Phasellus et massa at purus placerat sollicitudin non nec tortor. Praesent vitae quam sit amet sem dapibus iaculis non eu ante.</string>
+    <string name="sample_place">Delhi, India</string>
+    <string name="exit">Exit</string>
+    <string name="join">Join</string>
+    <string name="bookmarked_events">Bookmarked Events</string>
+    <string name="sample_name">Henry Ford</string>
+
 </resources>

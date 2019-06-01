@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/white"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="Add School"
+                app:titleTextColor="@android:color/black"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/add_school_main_image"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_margin="12dp"
+                android:background="@drawable/rounded_box"
+                android:scaleType="centerCrop"
+                android:transitionName="main_item_main_image" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="Add an image for your school"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+
+            <Button
+                android:id="@+id/addImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_marginBottom="24dp"
+                android:backgroundTint="@color/colorAccent"
+                android:paddingStart="36dp"
+                android:paddingEnd="36dp"
+                android:text="Upload"
+                android:textColor="@android:color/white" />
+        </FrameLayout>
+
+
+        <EditText
+            android:id="@+id/add_school_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="18dp"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="12dp"
+            android:paddingStart="12dp"
+            android:textColorHint="@android:color/black"/>
+
+        <EditText
+            android:id="@+id/add_school_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:inputType="text"
+            android:minLines="5"
+            android:maxLines="10"
+            android:padding="18dp"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="8dp"
+            android:paddingStart="12dp"
+            android:textColorHint="@android:color/black"/>
+
+        <EditText
+            android:id="@+id/add_school_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="18dp"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="8dp"
+            android:paddingStart="12dp"
+            android:textColorHint="@android:color/black"/>
+
+        <EditText
+            android:id="@+id/add_school_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="City"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="18dp"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="8dp"
+            android:paddingStart="12dp"
+            android:textColorHint="@android:color/black"/>
+
+        <EditText
+            android:id="@+id/add_school_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Country"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="18dp"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="8dp"
+            android:paddingStart="12dp"
+            android:textColorHint="@android:color/black"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/add_school_add_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:minHeight="56dp"
+        android:text="Submit"
+        android:textSize="18dp"
+        android:layout_alignParentBottom="true"
+        android:textColor="@android:color/black"
+        android:elevation="1dp"
+        android:background="@drawable/button_background_stroke"/>
+
+</RelativeLayout>

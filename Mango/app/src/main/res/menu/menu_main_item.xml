@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/see_people_who_are_going"
+        android:title="See people who are going" />
+    <item
+        android:id="@+id/menu_bookmark"
+        android:title="Bookmark" />
+    <item
+        android:id="@+id/menu_report"
+        android:title="Report" />
+
+</menu>

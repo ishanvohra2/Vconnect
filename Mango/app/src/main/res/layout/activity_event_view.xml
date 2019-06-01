@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:layout_marginBottom="56dp"
+        android:orientation="vertical"
+        tools:context=".activity.EventViewActivity">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:id="@+id/host_name_layout"
+                    android:transitionName="profile_bar">
+
+
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/event_view_profile_pic"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:src="@drawable/ic_user_pic"
+                        app:civ_border="false" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/event_view_title"
+                            android:text="No Network"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/event_view_sub_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:text="@string/sample_place"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="14sp"
+                            android:visibility="gone"/>
+
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_menu" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/new_event_main_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:background="#f0f0f0"
+                        android:scaleType="centerCrop"
+                        android:transitionName="main_item_main_image" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="12dp"
+                        android:layout_gravity="bottom"
+                        android:background="@drawable/paper_corner" />
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/event_view_message_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/button_rect"
+                    android:text="Message"
+                    android:textColor="@color/colorPrimary"
+                    android:minWidth="60dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/event_view_event_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:text="No Network"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_margin="12dp"-->
+                <!--android:background="#f0f0f0" />-->
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:animateLayoutChanges="true"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<Button-->
+                <!--android:id="@+id/event_view_join_btn"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginStart="12dp"-->
+                <!--android:layout_marginEnd="12dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@android:color/holo_green_light"-->
+                <!--android:minHeight="52dp"-->
+                <!--android:text="Join"-->
+                <!--android:textColor="@android:color/white"-->
+                <!--android:textSize="16sp"-->
+                <!--android:textStyle="bold" />-->
+
+                <!--<Button-->
+                <!--android:id="@+id/event_view_remind_btn"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginStart="12dp"-->
+                <!--android:layout_marginEnd="12dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@color/colorAccent"-->
+                <!--android:minHeight="52dp"-->
+                <!--android:text="Remind ME"-->
+                <!--android:textColor="@android:color/white"-->
+                <!--android:textSize="16sp"-->
+                <!--android:textStyle="bold" />-->
+
+                <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_gravity="center"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_marginEnd="12dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:background="@color/colorAccent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:paddingTop="12dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:paddingBottom="12dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:src="@drawable/ic_time"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:tint="@android:color/white" />&ndash;&gt;-->
+
+                <!--</LinearLayout>-->
+
+                <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_margin="12dp"-->
+                <!--android:background="#f0f0f0" />-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingTop="@dimen/fab_margin"
+                    android:paddingBottom="@dimen/fab_margin">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="top"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="@dimen/fab_margin"
+                        android:src="@drawable/ic_time"
+                        android:tint="@android:color/darker_gray" />
+
+                    <TextView
+                        android:id="@+id/event_view_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="No Network"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingTop="@dimen/fab_margin"
+                    android:paddingBottom="@dimen/fab_margin">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="@dimen/fab_margin"
+                        android:src="@drawable/ic_location"
+                        android:tint="@android:color/darker_gray" />
+
+                    <TextView
+                        android:id="@+id/event_view_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="No Network"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingTop="@dimen/fab_margin"
+                    android:paddingBottom="@dimen/fab_margin">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="@dimen/fab_margin"
+                        android:src="@drawable/ic_user"
+                        android:tint="@android:color/darker_gray" />
+
+                    <TextView
+                        android:id="@+id/event_view_host_by_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="No Network"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/event_view_people_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:padding="12dp"
+                    android:text="6 people are going"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+
+                <TextView
+                    android:id="@+id/event_view_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:ellipsize="end"
+                    android:maxLines="6"
+                    android:minLines="3"
+                    android:text="No Network"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+
+                <TextView
+                    android:id="@+id/event_view_read_more_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:ellipsize="end"
+                    android:maxLines="6"
+                    android:text="Read more..."
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:text="Comments"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/event_view_join_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:background="@color/colorAccent"
+        android:minHeight="56dp"
+        android:text="Join"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+</FrameLayout>

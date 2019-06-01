@@ -1,52 +1,127 @@
 {
   "project_info": {
-    "project_number": "839955781296",
-    "firebase_url": "https://mango-904bd.firebaseio.com",
-    "project_id": "mango-904bd",
-    "storage_bucket": "mango-904bd.appspot.com"
+    "project_number": "1035807977670",
+    "firebase_url": "https://mango-98d28.firebaseio.com",
+    "project_id": "mango-98d28",
+    "storage_bucket": "mango-98d28.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:839955781296:android:ab41a65ff49de2d7",
+        "mobilesdk_app_id": "1:1035807977670:android:171212406b2e61a9",
+        "android_client_info": {
+          "package_name": "com.devsebastian.mango"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035807977670-t0bsv87kmchaqnkbhu4dmdml4mse36e4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devsebastian.mango",
+            "certificate_hash": "f5f78db82357231a7339e58d30ae59a57450940c"
+          }
+        },
+        {
+          "client_id": "1035807977670-1ciponefg115abgtocheldu7g4tlm2bn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devsebastian.mango",
+            "certificate_hash": "32a7292a50905563f4ef56d1784c9dde0d08ed7b"
+          }
+        },
+        {
+          "client_id": "1035807977670-dpgkgbmdvdbq39cblrrjic2qjnfjfgqa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devsebastian.mango",
+            "certificate_hash": "65299cad800f51e49bf7dec1b4452a2108300546"
+          }
+        },
+        {
+          "client_id": "1035807977670-v3npcb2dkun79shj1gnd9r29jelrq6p0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBzug4SFUpYmxcFP6WDpnkr2jqKO6awg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035807977670-v3npcb2dkun79shj1gnd9r29jelrq6p0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035807977670:android:ab41a65ff49de2d7",
         "android_client_info": {
           "package_name": "com.example.ishan.mango"
         }
       },
       "oauth_client": [
         {
-          "client_id": "839955781296-u0u7fuva40480bvoobg2jc60dfa4gb7i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.ishan.mango",
-            "certificate_hash": "32a7292a50905563f4ef56d1784c9dde0d08ed7b"
-          }
-        },
-        {
-          "client_id": "839955781296-tq5f91e5s5bfa6niuqmojadodmdu7mpu.apps.googleusercontent.com",
+          "client_id": "1035807977670-v3npcb2dkun79shj1gnd9r29jelrq6p0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDKJTBwQD5bwJYzHdHOFypFWpgywYqXIjM"
+          "current_key": "AIzaSyCBzug4SFUpYmxcFP6WDpnkr2jqKO6awg8"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "839955781296-tq5f91e5s5bfa6niuqmojadodmdu7mpu.apps.googleusercontent.com",
+              "client_id": "1035807977670-v3npcb2dkun79shj1gnd9r29jelrq6p0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035807977670:android:6dc42406d30e5363",
+        "android_client_info": {
+          "package_name": "com.theindiecorp.mangofinale"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035807977670-s68n57b3dk4uo5hfnfp0m2b4em3udkag.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.theindiecorp.mangofinale",
+            "certificate_hash": "f5f78db82357231a7339e58d30ae59a57450940c"
+          }
         },
-        "ads_service": {
-          "status": 2
+        {
+          "client_id": "1035807977670-v3npcb2dkun79shj1gnd9r29jelrq6p0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBzug4SFUpYmxcFP6WDpnkr2jqKO6awg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035807977670-v3npcb2dkun79shj1gnd9r29jelrq6p0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
