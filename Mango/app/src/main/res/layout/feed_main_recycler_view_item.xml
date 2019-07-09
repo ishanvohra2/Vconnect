@@ -124,12 +124,9 @@
     <ImageView
         android:id="@+id/main_item_main_image"
         android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:layout_height="wrap_content"
         android:background="#f0f0f0"
-        android:scaleType="centerCrop"
-        android:transitionName="main_item_main_image"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"/>
+        android:transitionName="main_item_main_image"/>
 
     <LinearLayout
         android:layout_width="match_parent"
