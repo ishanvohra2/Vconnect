@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
     android:orientation="vertical"
     android:layout_marginStart="12dp"
@@ -109,7 +110,7 @@
 
         <TextView
             android:id="@+id/main_item_people_count"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="12dp"
@@ -125,8 +126,8 @@
         android:id="@+id/main_item_main_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f0f0f0"
-        android:transitionName="main_item_main_image"/>
+        android:transitionName="main_item_main_image"
+        tools:src="@drawable/picture"/>
 
     <LinearLayout
         android:layout_width="match_parent"

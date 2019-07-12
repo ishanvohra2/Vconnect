@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/feed_main_recycler_view_item"
-                app:reverseLayout="true"/>
+                app:reverseLayout="false"/>
 
             <View
                 android:id="@+id/black_film"
