@@ -70,7 +70,6 @@ public class NewEventActivity extends AppCompatActivity implements AdapterView.O
     String venue,venueId;
     final List<String> schools = new ArrayList<>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

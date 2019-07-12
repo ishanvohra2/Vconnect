@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.theindiecorp.mango.fragments.BookmarkFragment;
+import com.theindiecorp.mango.fragments.NewPostFragment;
 import com.theindiecorp.mango.fragments.MainFeedFragment;
 import com.theindiecorp.mango.fragments.ProfileFragment;
 import com.theindiecorp.mango.R;
@@ -26,9 +26,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private static final String USER_ID = "USER_ID";
     private static final String EDITABLE = "EDITABLE";
-
-
-
 
     Toolbar toolbar;
     BottomNavigationView navigationView;
@@ -56,9 +53,9 @@ public class HomeActivity extends AppCompatActivity {
                     fragment = new SearchFragment();
                     loadFragment(fragment);
                     return true;
-                case R.id.nav_bookmarks:
+                case R.id.nav_new_post:
 //                    toolbar.setTitle("Bookmarks");
-                    fragment = new BookmarkFragment()  ;
+                    fragment = new NewPostFragment()  ;
                     loadFragment(fragment);
                     return true;
                 case R.id.nav_profile:

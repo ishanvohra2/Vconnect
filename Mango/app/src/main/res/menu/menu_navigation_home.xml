@@ -7,14 +7,14 @@
         android:title="Home" />
 
     <item
-        android:id="@+id/nav_bookmarks"
-        android:icon="@drawable/ic_bookmark_black"
-        android:title="Bookmarks" />
-
-    <item
         android:id="@+id/nav_search"
         android:icon="@drawable/ic_search"
         android:title="Explore" />
+
+    <item
+        android:id="@+id/nav_new_post"
+        android:icon="@drawable/ic_bookmark_black"
+        android:title="New Post" />
 
     <item
         android:id="@+id/nav_your_events"

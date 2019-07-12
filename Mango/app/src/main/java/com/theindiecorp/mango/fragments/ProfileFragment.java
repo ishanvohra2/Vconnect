@@ -52,15 +52,11 @@ public class ProfileFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String USER_ID = "USER_ID";
     private static final String EDITABLE = "EDITABLE";
-    ArrayList<String> followerIds,schoolIds;
-
-
-    FirebaseAuth auth = FirebaseAuth.getInstance();
+    ArrayList<String> followerIds;
 
 
     private String userId;
     private Boolean editable;
-    LinearLayout watermark;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -202,59 +198,15 @@ public class ProfileFragment extends Fragment {
         RecyclerView followersRecycler = v.findViewById(R.id.my_profile_followed_users_list);
         followersRecycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
 
-        //followedschools
-        RecyclerView schoolRecycler = v.findViewById(R.id.my_profie_followed_school_list);
-        schoolRecycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-
         followerIds = new ArrayList<>();
-        schoolIds = new ArrayList<>();
 
         ArrayList<Event> events = new ArrayList<>();
-
-        CoordinatorLayout layout = v.findViewById(R.id.main_feed_main_layout);
 
         final mainFeedRecyclerViewAdapter adapter = new mainFeedRecyclerViewAdapter(events, getContext());
         recyclerView.setAdapter(adapter);
 
         final FollowersAdapter followersAdapter = new FollowersAdapter(followerIds,getContext());
         followersRecycler.setAdapter(followersAdapter);
-
-        final FollowedSchoolsAdapter followedSchoolsAdapter = new FollowedSchoolsAdapter(schoolIds,getContext());
-        schoolRecycler.setAdapter(followedSchoolsAdapter);
-
-        final DatabaseReference schoolReference = FirebaseDatabase.getInstance().getReference();
-        schoolReference.child("schools").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                schoolIds = new ArrayList<>();
-                for(final DataSnapshot school : dataSnapshot.getChildren()){
-                    DatabaseReference followerRef = FirebaseDatabase.getInstance().getReference("schools");
-                    followerRef.child(school.getKey()).child("followers").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                                if(snapshot.getKey().equals(userId)){
-                                    schoolIds.add(school.getKey());
-                                    break;
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-                followedSchoolsAdapter.setIds(schoolIds);
-                followedSchoolsAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         final DatabaseReference followerReference = FirebaseDatabase.getInstance().getReference();
         followerReference.child("users").child(userId).child("followers").addValueEventListener(new ValueEventListener() {

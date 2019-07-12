@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/bookmark_main_layout"
-    tools:context=".fragments.BookmarkFragment">
+    android:id="@+id/bookmark_main_layout">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,38 +27,38 @@
 
         </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/bookmarks_my_school_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/feed_main_recycler_view_item" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/bookmarks_my_school_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/feed_main_recycler_view_item" />
 
 
-    <LinearLayout
-        android:id="@+id/watermark"
-        android:layout_gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/watermark"
+            android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:text="You haven't bookmarked any posts yet ! Bookmark posts to view them here" />
+            android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginBottom="14dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_calendar_2" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:text="You haven't bookmarked any posts yet ! Bookmark posts to view them here" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="14dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_calendar_2" />
+        </LinearLayout>
 
     </LinearLayout>
 
