@@ -49,4 +49,7 @@ Donec ullamcorper dictum blandit. Vestibulum porta leo vel volutpat malesuada. A
     <string name="bookmarked_events">Bookmarked Events</string>
     <string name="sample_name">Henry Ford</string>
 
+    <string name="Open">Mango</string>
+    <string name="Close">Mango</string>
+
 </resources>

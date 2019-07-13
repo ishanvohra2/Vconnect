@@ -9,10 +9,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -66,6 +70,10 @@ public class ProfileFragment extends Fragment {
 
     TextView bioTv, displayNameTv, sexTv;
 
+    private DrawerLayout dl;
+    private ActionBarDrawerToggle t;
+    private NavigationView nv;
+
     public static ProfileFragment newInstance(String userId, Boolean editable) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
@@ -94,6 +102,30 @@ public class ProfileFragment extends Fragment {
         Button forgotPasswordBtn = v.findViewById(R.id.profile_reset_btn);
         final TextView followerCount = v.findViewById(R.id.my_profile_followers_count_tv);
         final TextView postCount = v.findViewById(R.id.my_profile_post_count_tv);
+        final LinearLayout followersBox = v.findViewById(R.id.followers_box);
+
+        dl = (DrawerLayout) v.findViewById(R.id.activity_main);
+        t = new ActionBarDrawerToggle(getActivity(), dl, R.string.Open, R.string.Close);
+
+        dl.addDrawerListener(t);
+        t.syncState();
+
+        nv = (NavigationView) v.findViewById(R.id.nv);
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.saved_posts) {
+
+                } else if (id == R.id.logout) {
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                } else if (id == R.id.forgot_your_password) {
+                    startActivity(new Intent(getContext(), ResetActivity.class));
+                }
+                return true;
+            }
+        });
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -219,6 +251,13 @@ public class ProfileFragment extends Fragment {
                 followersAdapter.setIds(followerIds);
                 followersAdapter.notifyDataSetChanged();
                 followerCount.setText(followerIds.size() + "");
+
+                if(followerIds.isEmpty()){
+                    followersBox.setVisibility(View.GONE);
+                }else{
+                    followersBox.setVisibility(View.VISIBLE);
+
+                }
             }
 
             @Override
@@ -226,7 +265,6 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         Query query = databaseReference.child("events").orderByChild("hostId").equalTo(userId);

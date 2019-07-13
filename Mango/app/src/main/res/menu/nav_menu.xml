@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/saved_posts"
+        android:title="Saved"
+        android:icon="@drawable/ic_bookmark_black"/>
+    <item android:id="@+id/forgot_your_password"
+        android:title="Forgot your password"/>
+    <item android:id="@+id/logout"
+        android:title="Log Out"/>
+
+</menu>
