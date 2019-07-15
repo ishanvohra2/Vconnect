@@ -11,6 +11,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -116,7 +117,9 @@ public class ProfileFragment extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.saved_posts) {
-
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.home_frame_container, new BookmarkFragment());
+                    transaction.commit();
                 } else if (id == R.id.logout) {
                     FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(getContext(), LoginActivity.class));

@@ -76,7 +76,7 @@ public class SearchFragment extends Fragment {
         attendeeAdapter = new AttendeeAdapter(new ArrayList<String>(),getContext());
         userRecyclerView.setAdapter(attendeeAdapter);
 
-        Button showPosts,showUsers;
+        final Button showPosts,showUsers;
 
         showPosts = v.findViewById(R.id.search_view_post_btn);
         showUsers = v.findViewById(R.id.search_view_people_btn);
@@ -86,6 +86,8 @@ public class SearchFragment extends Fragment {
             public void onClick(View view) {
                 recyclerView.setVisibility(View.GONE);
                 userRecyclerView.setVisibility(View.VISIBLE);
+                showPosts.setTextColor(getResources().getColor(android.R.color.black));
+                showUsers.setTextColor(getResources().getColor(R.color.colorAccent));
             }
         });
 
@@ -94,6 +96,8 @@ public class SearchFragment extends Fragment {
             public void onClick(View view) {
                 recyclerView.setVisibility(View.VISIBLE);
                 userRecyclerView.setVisibility(View.GONE);
+                showUsers.setTextColor(getResources().getColor(android.R.color.black));
+                showPosts.setTextColor(getResources().getColor(R.color.colorAccent));
             }
         });
 

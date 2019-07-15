@@ -152,6 +152,7 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
                             android:layout_gravity="center">
+
                             <Button
                                 android:id="@+id/profile_view_follow_btn"
                                 android:layout_width="wrap_content"

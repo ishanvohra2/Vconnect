@@ -15,6 +15,7 @@
         android:background="@drawable/rounded_box"
         android:clickable="true"
         android:focusable="true" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +28,8 @@
             android:layout_weight="1"
             android:text="Posts"
             android:background="@drawable/button_background_stroke"
-            android:layout_margin="5dp"/>
+            android:layout_margin="5dp"
+            android:textColor = "@color/colorPrimary"/>
 
         <Button
             android:id="@+id/search_view_people_btn"
