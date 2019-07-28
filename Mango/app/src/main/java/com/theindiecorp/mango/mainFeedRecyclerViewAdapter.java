@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.theindiecorp.mango.activity.AttendeeViewActivity;
+import com.theindiecorp.mango.activity.CommentActivity;
 import com.theindiecorp.mango.activity.EventViewActivity;
 import com.theindiecorp.mango.activity.HomeActivity;
 import com.theindiecorp.mango.activity.ProfileViewActivity;
@@ -72,7 +73,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, place, description, date, eventName, peopleCount, likeCount;
-        private ImageView profileImg, mainImg, bookmarkBtn, menuImg,likeBtn;
+        private ImageView profileImg, mainImg, bookmarkBtn, menuImg,likeBtn,commentBtn;
         LinearLayout profileBar;
         Boolean bookmarked,liked;
 
@@ -92,6 +93,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
             this.menuImg = itemView.findViewById(R.id.main_item_menu_img);
             this.likeBtn = itemView.findViewById(R.id.main_item_like_btn);
             this.likeCount = itemView.findViewById(R.id.main_post_likes);
+            this.commentBtn = itemView.findViewById(R.id.main_item_comment_btn);
         }
     }
 
@@ -144,7 +146,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, int listPosition) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int listPosition) {
         final Event event = dataSet.get(listPosition);
 
         // profile image reference
@@ -271,6 +273,16 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        holder.commentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String eventId = dataSet.get(listPosition).getId();
+                Intent i = new Intent(context, CommentActivity.class);
+                i.putExtra("eventId", eventId);
+                context.startActivity(i);
             }
         });
 

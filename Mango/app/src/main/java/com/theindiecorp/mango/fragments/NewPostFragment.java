@@ -119,6 +119,8 @@ public class NewPostFragment extends Fragment {
 
     public String uploadImage(String eventId) {
 
+        //TODO: Fix NullPointerException here
+
         Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);

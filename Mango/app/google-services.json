@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1035807977670-shd12vh67vf894k1d2i23d1iur6j729p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devsebastian.mango",
+            "certificate_hash": "e82bf0d6a7a935d433504c542b8f7b4560d71cd9"
+          }
+        },
+        {
           "client_id": "1035807977670-t0bsv87kmchaqnkbhu4dmdml4mse36e4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -7,8 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.theindiecorp.mango.fragments.NewPostFragment;
 import com.theindiecorp.mango.fragments.MainFeedFragment;
 import com.theindiecorp.mango.fragments.ProfileFragment;
@@ -88,5 +92,22 @@ public class HomeActivity extends AppCompatActivity {
         loadFragment(new MainFeedFragment());
 
         // ended here
+    }
+
+    private void sendRegistrationToServer(String token) {
+        Log.d(TAG, "sendRegistrationToServer: sending token to server: " + token);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("messagingToken")
+                .setValue(token);
+    }
+
+
+    private void initFCM(){
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "initFCM: token: " + token);
+        sendRegistrationToServer(token);
+
     }
 }

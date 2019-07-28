@@ -12,7 +12,7 @@ public class Event {
 
 
     //others
-    private ArrayList<Comment> comments;
+    //private ArrayList<Comment> comments;
     private String imgUrl;
     private String id,venueId;
     private String hostName;
@@ -117,13 +117,13 @@ public class Event {
     }
 
 
-    public ArrayList<Comment> getComments() {
+/*    public ArrayList<Comment> getComments() {
         return comments;
     }
 
     public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
-    }
+    }*/
 
 
 
