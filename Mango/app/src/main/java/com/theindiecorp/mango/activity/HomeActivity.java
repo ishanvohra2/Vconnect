@@ -1,5 +1,6 @@
 package com.theindiecorp.mango.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -26,6 +28,7 @@ public class HomeActivity extends AppCompatActivity {
     public static final String TAG = "stupid"; // TODO
     public static String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     public static String userEmail;
+    String eventIdFromIntent = "";
 
 
     private static final String USER_ID = "USER_ID";
@@ -50,6 +53,11 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.nav_home:
 //                    toolbar.setTitle("Home");
                     fragment = new MainFeedFragment();
+                    if(!TextUtils.isEmpty(eventIdFromIntent)){
+                        Bundle args = new Bundle();
+                        args.putString("eventId", eventIdFromIntent);
+                        fragment.setArguments(args);
+                    }
                     loadFragment(fragment);
                     return true;
                 case R.id.nav_search:
@@ -83,6 +91,15 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        initFCM();
+
+        Intent intent = getIntent();
+        if (intent.hasExtra("intentType")) {
+            if (intent.getStringExtra("intentType").equals("startActivityFromNotification")) {
+                eventIdFromIntent = intent.getStringExtra("link");
+            }
+        }
 
         // added from here
 

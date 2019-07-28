@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,8 +80,14 @@ public class MainFeedFragment extends Fragment {
         userId  = FirebaseAuth.getInstance().getCurrentUser().getUid();
         userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
+        String eventIdArgument = "";
+        if(getArguments() !=null && !getArguments().isEmpty()) {
+            eventIdArgument = getArguments().getString("eventId");
+        }
+        final String eventId = eventIdArgument;
+
         //posts
-        RecyclerView recyclerView = view.findViewById(R.id.main_feed_my_school_recycler_view);
+        final RecyclerView recyclerView = view.findViewById(R.id.main_feed_my_school_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
 
         ArrayList<Event> events = new ArrayList<>();
@@ -113,15 +120,23 @@ public class MainFeedFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<Event> events = new ArrayList<>();
+                Event EventFromNotification = new Event();
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     final Event event = eventSnapshot.getValue(Event.class);
                     event.setId(eventSnapshot.getKey());
                     if(followingUserIds.contains(event.getHostId()) || event.getHostId().equals(userId)){
                         events.add(event);
                     }
+                    if(eventSnapshot.getKey().equals(eventId)){
+                        EventFromNotification = event;
+                    }
                 }
                 adapter.setEvents(events);
                 adapter.notifyDataSetChanged();
+
+                if(!TextUtils.isEmpty(eventId) && EventFromNotification != null){
+                    recyclerView.scrollToPosition(events.indexOf(EventFromNotification));
+                }
             }
 
             @Override

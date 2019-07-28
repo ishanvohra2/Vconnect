@@ -14,7 +14,7 @@ exports.postLike = functions.database.ref('/likes/{likerId}/{eventId}').onCreate
 	const likerId = context.params.likerId;
 
 	console.log("eventId: " + eventId);
-	console.log("LikerId: " + likerId);
+	console.log("likerId: " + likerId);
 
 
 	//define the message id. We'll be sending this in the payload
@@ -27,6 +27,9 @@ exports.postLike = functions.database.ref('/likes/{likerId}/{eventId}').onCreate
 	const receiverId = snap.child('hostId').val();
 
 	console.log("receiverId: " + receiverId);
+
+	//Don't send the notification if a user has liked his onw post
+	if(receiverId !== likerId){
 
 			//get the token of the user receiving the message and the dsiplayName of the user who like the post
 			return admin.database().ref("/users").once('value').then(snap => { 
@@ -70,18 +73,33 @@ exports.postLike = functions.database.ref('/likes/{likerId}/{eventId}').onCreate
 					data_title: title,
 					data_message_short: shortMessage,
 					data_message_long: longMessage,
-					data_message_id: messageId
+					data_message_id: messageId,
+					data_link:eventId
 				}
 			};
 			
 			return admin.messaging().sendToDevice(token, payload)
 						.then(function(response) {
 							console.log("Successfully sent message:", response);
+
+							//Save the notification in the database
+							var notificationRef = admin.database().ref('users/' + receiverId + '/notifications');
+							var newNotificationRef = notificationRef.push();
+
+							newNotificationRef.set({
+								notificationType: 'postLike',
+								notification: longMessage,
+								link: eventId //Link is either the id of the psot or the user id(in case of follow)
+							}); 
 						  })
 						  .catch(function(error) {
 							console.log("Error sending message:", error);
 						  });
 			});
+		}
+		else{
+			return null;
+		}
 
 		});
 });

@@ -304,20 +304,22 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
             holder.mainImg.setVisibility(View.GONE);
         } else {
             // main image reference
-            StorageReference imageReference = storage.getReference().child(event.getImgUrl());
-            imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Glide.with(context.getApplicationContext())
-                            .load(uri)
-                            .into(holder.mainImg);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    Log.d(HomeActivity.TAG, exception.getMessage());
-                }
-            });
+            if(event.getImgUrl() != null) {
+                StorageReference imageReference = storage.getReference().child(event.getImgUrl());
+                imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide.with(context.getApplicationContext())
+                                .load(uri)
+                                .into(holder.mainImg);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Log.d(HomeActivity.TAG, exception.getMessage());
+                    }
+                });
+            }
         }
 
         if(event.getType().equals("article")){

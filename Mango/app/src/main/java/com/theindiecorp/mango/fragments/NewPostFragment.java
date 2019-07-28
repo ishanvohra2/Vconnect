@@ -119,19 +119,21 @@ public class NewPostFragment extends Fragment {
 
     public String uploadImage(String eventId) {
 
-        //TODO: Fix NullPointerException here
+        if (image.getDrawable() != null) {
+            Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] bitmapdata = stream.toByteArray();
 
-        Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] bitmapdata = stream.toByteArray();
+            String path = "events/" + eventId + "/images/image.jpeg";
+            StorageReference storageReference = storage.getReference(path);
 
-        String path = "events/" + eventId + "/images/image.jpeg";
-        StorageReference storageReference = storage.getReference(path);
+            UploadTask uploadTask = storageReference.putBytes(bitmapdata);
 
-        UploadTask uploadTask = storageReference.putBytes(bitmapdata);
+            return path;
+        }
 
-        return path;
+        return "";
     }
 
     private void addPost() throws ParseException {
@@ -154,7 +156,8 @@ public class NewPostFragment extends Fragment {
             Event event = new Event();
             event.setType("article");
             event.setPublishDate(date);
-            event.setImgUrl(imgPath);
+            if (!TextUtils.isEmpty(imgPath))
+                event.setImgUrl(imgPath);
             event.setHostId(userId);
             event.setEventName("");
             event.setDescription(articleTxt);

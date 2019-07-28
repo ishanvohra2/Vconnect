@@ -71,13 +71,15 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int listPosition) {
-        String userId = dataSet.get(listPosition).getUserId();
+        final int position = listPosition;
+        String userId = dataSet.get(position).getUserId();
         //Get the user name of the commenter
         databaseReference.child("users").child(userId).child("displayName").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String displayName = dataSnapshot.getValue(String.class);
                 holder.name.setText(displayName);
+                holder.comment.setText(dataSet.get(position).getMessage());
             }
 
             @Override
@@ -85,8 +87,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.MyView
 
             }
         });
-
-        holder.comment.setText(dataSet.get(listPosition).getMessage());
     }
 
     @Override

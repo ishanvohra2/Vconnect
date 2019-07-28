@@ -1,5 +1,6 @@
 package com.theindiecorp.mango.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,7 +56,20 @@ public class ProfileViewActivity extends AppCompatActivity {
         final mainFeedRecyclerViewAdapter adapter = new mainFeedRecyclerViewAdapter(events, this);
         recyclerView.setAdapter(adapter);
 
-        final String userId = getIntent().getStringExtra("userId");
+        Intent intent = getIntent();
+        String userIdFromIntent = "";
+        if(intent.hasExtra("intentType")){
+            if(intent.getStringExtra("intentType").equals("startActivityFromNotification")){
+                userIdFromIntent = intent.getStringExtra("link");
+            }
+            else{
+                userIdFromIntent = intent.getStringExtra("userId");
+            }
+        }
+        else{
+            userIdFromIntent = intent.getStringExtra("userId");
+        }
+        final String userId = userIdFromIntent;
 
         if(userId.equals(HomeActivity.userId)){
             followBtn.setVisibility(View.GONE);
