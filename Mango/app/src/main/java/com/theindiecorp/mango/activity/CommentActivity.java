@@ -76,6 +76,7 @@ public class CommentActivity extends AppCompatActivity {
         }
 
         eventId = eventIdFromIntent;
+        Log.e("eventId: ", eventId);
 
         final CommentsAdapter commentsAdapter = new CommentsAdapter(commentsList, this);
         commentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));

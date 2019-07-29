@@ -57,6 +57,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.e("short", shortMessage);
         Log.e("long", longMessage);
         Log.e("dataType", dataType);
+        Log.e("link", link);
 
     }
 

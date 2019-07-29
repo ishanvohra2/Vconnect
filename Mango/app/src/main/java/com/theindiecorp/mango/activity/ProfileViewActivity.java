@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -70,6 +71,7 @@ public class ProfileViewActivity extends AppCompatActivity {
             userIdFromIntent = intent.getStringExtra("userId");
         }
         final String userId = userIdFromIntent;
+        Log.e("userId: ", userIdFromIntent);
 
         if(userId.equals(HomeActivity.userId)){
             followBtn.setVisibility(View.GONE);
