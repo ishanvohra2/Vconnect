@@ -101,9 +101,10 @@ public class ProfileFragment extends Fragment {
         profilePhotoImg = v.findViewById(R.id.profile_photo);
         Button signOutBtn = v.findViewById(R.id.profile_sign_out_btn);
         Button forgotPasswordBtn = v.findViewById(R.id.profile_reset_btn);
-        final TextView followerCount = v.findViewById(R.id.my_profile_followers_count_tv);
+        final TextView followingCount = v.findViewById(R.id.my_profile_followers_count_tv);
         final TextView postCount = v.findViewById(R.id.my_profile_post_count_tv);
         final LinearLayout followersBox = v.findViewById(R.id.followers_box);
+        final TextView followerText = v.findViewById(R.id.my_profile_following_count_tv);
 
         dl = (DrawerLayout) v.findViewById(R.id.activity_main);
         t = new ActionBarDrawerToggle(getActivity(), dl, R.string.Open, R.string.Close);
@@ -253,7 +254,7 @@ public class ProfileFragment extends Fragment {
                 }
                 followersAdapter.setIds(followerIds);
                 followersAdapter.notifyDataSetChanged();
-                followerCount.setText(followerIds.size() + "");
+                followingCount.setText(followerIds.size() + "");
 
                 if(followerIds.isEmpty()){
                     followersBox.setVisibility(View.GONE);
@@ -291,7 +292,48 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int i =0;
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    if(snapshot.child("followers").exists()){
+                        if(checkIsFollowed(snapshot.getKey())){
+                            i++;
+                        }
+                    }
+                }
+                followerText.setText("" + i);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         return v;
+    }
+
+    private boolean checkIsFollowed(String key) {
+        final Boolean[] found = {false};
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference.child(key).child("followers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    if(snapshot.getKey().equals(userId)){
+                        found[0] = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return found[0];
     }
 
     private AlertDialog dialog(Context context) {

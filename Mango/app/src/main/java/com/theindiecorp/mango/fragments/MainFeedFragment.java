@@ -14,10 +14,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.theindiecorp.mango.FollowedSchoolsAdapter;
 import com.theindiecorp.mango.FollowersAdapter;
 import com.theindiecorp.mango.R;
+import com.theindiecorp.mango.activity.InboxActivity;
 import com.theindiecorp.mango.activity.NewArticleActivity;
 import com.theindiecorp.mango.activity.NewEventActivity;
 import com.theindiecorp.mango.data.Event;
@@ -36,7 +38,6 @@ import java.util.ArrayList;
 public class MainFeedFragment extends Fragment {
 
     String userId,userEmail;
-    FirebaseAuth auth = FirebaseAuth.getInstance();
     ArrayList<String> followingUserIds = new ArrayList<>();
 
     private static final String ARG_PARAM1 = "param1";
@@ -168,6 +169,14 @@ public class MainFeedFragment extends Fragment {
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
+            }
+        });
+
+        Button messageBtn = view.findViewById(R.id.message_btn);
+        messageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), InboxActivity.class));
             }
         });
 
