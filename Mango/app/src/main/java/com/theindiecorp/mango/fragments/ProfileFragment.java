@@ -16,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -101,7 +102,8 @@ public class ProfileFragment extends Fragment {
         profilePhotoImg = v.findViewById(R.id.profile_photo);
         Button signOutBtn = v.findViewById(R.id.profile_sign_out_btn);
         Button forgotPasswordBtn = v.findViewById(R.id.profile_reset_btn);
-        final TextView followerCount = v.findViewById(R.id.my_profile_followers_count_tv);
+        final TextView followingCount = v.findViewById(R.id.my_profile_following_count_tv);
+        final TextView followersCount = v.findViewById(R.id.my_profile_followers_count_tv);
         final TextView postCount = v.findViewById(R.id.my_profile_post_count_tv);
         final LinearLayout followersBox = v.findViewById(R.id.followers_box);
 
@@ -243,8 +245,8 @@ public class ProfileFragment extends Fragment {
         final FollowersAdapter followersAdapter = new FollowersAdapter(followerIds,getContext());
         followersRecycler.setAdapter(followersAdapter);
 
-        final DatabaseReference followerReference = FirebaseDatabase.getInstance().getReference();
-        followerReference.child("users").child(userId).child("followers").addValueEventListener(new ValueEventListener() {
+        final DatabaseReference followingReference = FirebaseDatabase.getInstance().getReference();
+        followingReference.child("users").child(userId).child("followers").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 followerIds = new ArrayList<>();
@@ -253,7 +255,7 @@ public class ProfileFragment extends Fragment {
                 }
                 followersAdapter.setIds(followerIds);
                 followersAdapter.notifyDataSetChanged();
-                followerCount.setText(followerIds.size() + "");
+                followingCount.setText(followerIds.size() + "");
 
                 if(followerIds.isEmpty()){
                     followersBox.setVisibility(View.GONE);
@@ -261,6 +263,30 @@ public class ProfileFragment extends Fragment {
                     followersBox.setVisibility(View.VISIBLE);
 
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        DatabaseReference  followerReference = FirebaseDatabase.getInstance().getReference();
+        followerReference.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int followerCountInteger = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if(snapshot.child("followers").exists()){
+                        for (DataSnapshot followingSnapshot : snapshot.child("followers").getChildren()) {
+                            Log.e("key", followingSnapshot.getKey());
+                            if(followingSnapshot.getKey().equals(userId)){
+                                followerCountInteger++;
+                            }
+                        }
+                    }
+                }
+                followersCount.setText(String.valueOf(followerCountInteger));
             }
 
             @Override
