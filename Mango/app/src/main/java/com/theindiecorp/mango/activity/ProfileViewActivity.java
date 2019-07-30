@@ -136,14 +136,23 @@ public class ProfileViewActivity extends AppCompatActivity {
             }
         });
 
-        databaseReference.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("followers").addValueEventListener(new ValueEventListener() {
+
+        DatabaseReference  followerReference = FirebaseDatabase.getInstance().getReference();
+        followerReference.child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<String> followerList = new ArrayList<>();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                     followerList.add(snapshot.getKey());
+                int followerCountInteger = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if(snapshot.child("followers").exists()){
+                        for (DataSnapshot followingSnapshot : snapshot.child("followers").getChildren()) {
+                            Log.e("key", followingSnapshot.getKey());
+                            if(followingSnapshot.getKey().equals(userId)){
+                                followerCountInteger++;
+                            }
+                        }
+                    }
                 }
-                followers.setText(followerList.size() + "");
+                followers.setText(String.valueOf(followerCountInteger));
             }
 
             @Override
