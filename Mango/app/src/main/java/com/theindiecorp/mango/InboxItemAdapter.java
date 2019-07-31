@@ -33,7 +33,7 @@ public class InboxItemAdapter extends RecyclerView.Adapter<InboxItemAdapter.MyVi
     private ArrayList<String> dataSet;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
 
-    public int etMessageId(ArrayList<String> dataSet){
+    public int setMessageId(ArrayList<String> dataSet){
         this.dataSet = dataSet;
         return dataSet.size();
     }
