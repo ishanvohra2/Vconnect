@@ -1,15 +1,7 @@
 package com.theindiecorp.mango.data;
 
 public class Text {
-    private String sentBy, content, time, date;
-
-    public String getSentBy() {
-        return sentBy;
-    }
-
-    public void setSentBy(String sentBy) {
-        this.sentBy = sentBy;
-    }
+    String content,date,time,sentBy;
 
     public String getContent() {
         return content;
@@ -17,6 +9,14 @@ public class Text {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getTime() {
@@ -27,11 +27,11 @@ public class Text {
         this.time = time;
     }
 
-    public String getDate() {
-        return date;
+    public String getSentBy() {
+        return sentBy;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setSentBy(String sentBy) {
+        this.sentBy = sentBy;
     }
 }
