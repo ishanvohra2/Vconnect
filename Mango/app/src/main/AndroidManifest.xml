@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.InboxActivity"></activity>
+        <activity android:name=".activity.InboxActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>
