@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="12dp">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sent_box"
+        android:padding="5dp"
+        android:text="Text content here"
+        android:textAlignment="textEnd"
+        android:textColor="@android:color/black"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="textEnd"
+        android:text="DD/MM/YYYY : hh:mm"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        android:layout_marginTop="3dp"
+        android:visibility="gone"/>
+
+</LinearLayout>

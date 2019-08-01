@@ -38,44 +38,12 @@ public class InboxActivity extends AppCompatActivity {
         inboxItemAdapter = new InboxItemAdapter(this,new ArrayList<String>());
         inboxRecycler.setAdapter(inboxItemAdapter);
 
-        databaseReference.child("messages").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                userIds = new ArrayList<>();
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        userIds.add(snapshot.getKey());
-                    }
-                    inboxItemAdapter.setMessageId(userIds);
-                    inboxItemAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        databaseReference.child("messages").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addValueEventListener(valueEventListener);
 
         if(userIds.isEmpty()){
-            databaseReference.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("followers").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    userIds = new ArrayList<>();
-                    if(dataSnapshot.exists()){
-                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                            userIds.add(snapshot.getKey());
-                        }
-                        inboxItemAdapter.setMessageId(userIds);
-                        inboxItemAdapter.notifyDataSetChanged();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
+            databaseReference.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("followers")
+                    .addValueEventListener(valueEventListener);
         }
 
         searchView = findViewById(R.id.main_feed_search_view);

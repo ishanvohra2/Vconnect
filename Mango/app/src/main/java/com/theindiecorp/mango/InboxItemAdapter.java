@@ -1,6 +1,7 @@
 package com.theindiecorp.mango;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.theindiecorp.mango.activity.HomeActivity;
+import com.theindiecorp.mango.activity.MessageActivity;
 
 import java.util.ArrayList;
 
@@ -67,7 +69,7 @@ public class InboxItemAdapter extends RecyclerView.Adapter<InboxItemAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int listPosition) {
-        String receiverId = dataSet.get(listPosition);
+        final String receiverId = dataSet.get(listPosition);
 
         // profile image reference
         StorageReference profileImageReference = storage.getReference().child("users/" + receiverId + "/images/profile_pic/profile_pic.jpeg");
@@ -95,7 +97,8 @@ public class InboxItemAdapter extends RecyclerView.Adapter<InboxItemAdapter.MyVi
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                                 textIds.add(snapshot.getKey());
                             }
-                            holder.lastMessage.setText(textIds.get(textIds.size() - 1));
+                            String last = textIds.get(textIds.size() - 1);
+                            holder.lastMessage.setText(dataSnapshot.child(last).child("content").getValue(String.class));
                         }
                         else{
                             holder.lastMessage.setText("Tap to say Hi!");
@@ -117,6 +120,14 @@ public class InboxItemAdapter extends RecyclerView.Adapter<InboxItemAdapter.MyVi
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, MessageActivity.class)
+                    .putExtra("userid",receiverId));
             }
         });
     }

@@ -29,7 +29,8 @@
         <activity
             android:name=".activity.AddSchoolActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".activity.MessageActivity" />
+        <activity android:name=".activity.MessageActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"  />
         <activity
             android:name=".activity.ProfileViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -78,6 +79,7 @@
         <activity
             android:name=".activity.SchoolViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>
