@@ -1,6 +1,7 @@
 package com.theindiecorp.mango;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.theindiecorp.mango.activity.HomeActivity;
+import com.theindiecorp.mango.activity.MessageActivity;
 
 import java.util.ArrayList;
 
@@ -117,6 +119,13 @@ public class InboxItemAdapter extends RecyclerView.Adapter<InboxItemAdapter.MyVi
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, MessageActivity.class));
             }
         });
     }
