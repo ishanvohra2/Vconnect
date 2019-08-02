@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_feed_main_layout"
-    tools:context=".fragments.MainFeedFragment">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+    tools:context=".fragments.MainFeedFragment"
+    android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,8 +67,6 @@
 
         </LinearLayout>
 
-    </ScrollView>
-
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,4 +77,4 @@
         android:src="@drawable/ic_add"
         android:visibility="gone"/>
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

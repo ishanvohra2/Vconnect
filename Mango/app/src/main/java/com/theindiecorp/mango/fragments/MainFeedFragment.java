@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.theindiecorp.mango.FollowedSchoolsAdapter;
 import com.theindiecorp.mango.FollowersAdapter;
@@ -90,10 +91,11 @@ public class MainFeedFragment extends Fragment {
         //posts
         final RecyclerView recyclerView = view.findViewById(R.id.main_feed_my_school_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+//        recyclerView.setNestedScrollingEnabled(false);
 
         ArrayList<Event> events = new ArrayList<>();
 
-        CoordinatorLayout layout = view.findViewById(R.id.main_feed_main_layout);
+        LinearLayout layout = view.findViewById(R.id.main_feed_main_layout);
 
         final mainFeedRecyclerViewAdapter adapter = new mainFeedRecyclerViewAdapter(events, getContext(), layout);
         recyclerView.setAdapter(adapter);

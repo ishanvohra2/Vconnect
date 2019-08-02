@@ -13,20 +13,31 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-            <TextView
-                android:id="@+id/toolbar_title"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Name"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"/>
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/white"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:titleTextColor="@android:color/black">
 
-        </android.support.v7.widget.Toolbar>
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/messages_recycler"
@@ -42,7 +53,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_margin="12dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/button_background_stroke">
 
         <EditText
@@ -52,10 +65,10 @@
             android:hint="Type here"
             android:textColorHint="@android:color/darker_gray"
             android:layout_weight="1"
-            android:layout_margin="8dp"
             android:maxLines="5"
             android:scrollbars="vertical"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_vertical"/>
 
         <Button
             android:id="@+id/sendBtn"

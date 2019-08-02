@@ -24,6 +24,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.theindiecorp.mango.activity.AttendeeViewActivity;
 import com.theindiecorp.mango.activity.CommentActivity;
 import com.theindiecorp.mango.activity.EventViewActivity;
@@ -57,7 +58,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
     int likeCounter = 0;
 
     Context context;
-    CoordinatorLayout layout;
+    LinearLayout layout;
 
     BottomSheetBehavior bottomSheetBehavior;
 
@@ -104,14 +105,14 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
     }
 
 
-    public mainFeedRecyclerViewAdapter(ArrayList<Event> data, Context context, CoordinatorLayout coordinatorLayout) {
+    public mainFeedRecyclerViewAdapter(ArrayList<Event> data, Context context, LinearLayout coordinatorLayout) {
         this.dataSet = data;
         this.context = context;
         this.layout = coordinatorLayout;
     }
 
 
-    public mainFeedRecyclerViewAdapter(ArrayList<Event> data, Context context, boolean isBookmarked, CoordinatorLayout frameLayout,boolean isLiked) {
+    public mainFeedRecyclerViewAdapter(ArrayList<Event> data, Context context, boolean isBookmarked, LinearLayout frameLayout,boolean isLiked) {
         this.dataSet = data;
         this.context = context;
         this.isBookmarked = isBookmarked;
@@ -154,7 +155,11 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
         profileImageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
+
                 Glide.with(context.getApplicationContext())
+                        .asBitmap()
+                        .apply(new RequestOptions()
+                                .override(50,50))
                         .load(uri)
                         .into(holder.profileImg);
             }

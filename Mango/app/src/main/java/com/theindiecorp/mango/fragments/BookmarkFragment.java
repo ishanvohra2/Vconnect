@@ -40,7 +40,7 @@ public class BookmarkFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.bookmarks_my_school_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        CoordinatorLayout frameLayout = view.findViewById(R.id.bookmark_main_layout);
+        LinearLayout frameLayout = view.findViewById(R.id.bookmark_main_layout);
         adapter = new mainFeedRecyclerViewAdapter(events, getContext(), true, frameLayout,true);
         recyclerView.setAdapter(adapter);
 

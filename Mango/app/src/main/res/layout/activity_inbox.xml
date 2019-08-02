@@ -8,20 +8,21 @@
     tools:context="com.theindiecorp.mango.activity.InboxActivity"
     android:orientation="vertical">
 
-    <Toolbar
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="2dp">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <TextView
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:textSize="20sp"
-            android:textColor="@android:color/black"
-            android:text="Inbox"/>
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="Inbox"
+            app:titleTextColor="@android:color/black"/>
 
-    </Toolbar>
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.SearchView
         android:id="@+id/main_feed_search_view"
