@@ -69,7 +69,7 @@ public class InboxItemAdapter extends RecyclerView.Adapter<InboxItemAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int listPosition) {
-        String receiverId = dataSet.get(listPosition);
+        final String receiverId = dataSet.get(listPosition);
 
         // profile image reference
         StorageReference profileImageReference = storage.getReference().child("users/" + receiverId + "/images/profile_pic/profile_pic.jpeg");
@@ -97,7 +97,8 @@ public class InboxItemAdapter extends RecyclerView.Adapter<InboxItemAdapter.MyVi
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                                 textIds.add(snapshot.getKey());
                             }
-                            holder.lastMessage.setText(textIds.get(textIds.size() - 1));
+                            String last = textIds.get(textIds.size() - 1);
+                            holder.lastMessage.setText(dataSnapshot.child(last).child("content").getValue(String.class));
                         }
                         else{
                             holder.lastMessage.setText("Tap to say Hi!");
@@ -125,7 +126,12 @@ public class InboxItemAdapter extends RecyclerView.Adapter<InboxItemAdapter.MyVi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< HEAD
                 context.startActivity(new Intent(context, MessageActivity.class));
+=======
+                context.startActivity(new Intent(context, MessageActivity.class)
+                    .putExtra("userid",receiverId));
+>>>>>>> d4fc8d0439a47b5b2c6b8a8785e34b1ba017b2bf
             }
         });
     }
