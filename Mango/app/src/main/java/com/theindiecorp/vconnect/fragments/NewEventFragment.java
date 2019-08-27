@@ -79,7 +79,7 @@ public class NewEventFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_event,container,false);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("posts");
+        mDatabase = FirebaseDatabase.getInstance().getReference("events");
 
         eventName = view.findViewById(R.id.eventName);
         eventDescription = view.findViewById(R.id.eventDescription);
@@ -227,7 +227,7 @@ public class NewEventFragment extends Fragment {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] bitmapdata = stream.toByteArray();
 
-        String path = "posts/" + eventId + "/images/image.jpeg";
+        String path = "events/" + eventId + "/images/image.jpeg";
         StorageReference storageReference = storage.getReference(path);
 
         UploadTask uploadTask = storageReference.putBytes(bitmapdata);

@@ -270,8 +270,10 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
         databaseReference.child("events").child(event.getId()).child("likeCount").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                likeCounter = dataSnapshot.getValue(Integer.class);
-                holder.likeCount.setText(likeCounter + "");
+                if( dataSnapshot.getValue(Integer.class) != null){
+                    likeCounter = dataSnapshot.getValue(Integer.class);
+                    holder.likeCount.setText(likeCounter + "");
+                }
             }
 
             @Override
