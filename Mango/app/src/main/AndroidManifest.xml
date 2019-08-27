@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.theindiecorp.mango">
+    package="com.theindiecorp.vconnect">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,31 +11,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.InboxActivity"
+        <activity android:name="com.theindiecorp.vconnect.activity.InboxActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <service android:name=".MyFirebaseInstanceIDService">
+        <service android:name="com.theindiecorp.vconnect.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".MyFirebaseMessagingService">
+        <service android:name="com.theindiecorp.vconnect.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name=".activity.CommentActivity" />
+        <activity android:name="com.theindiecorp.vconnect.activity.CommentActivity" />
         <activity
-            android:name=".activity.AddSchoolActivity"
+            android:name="com.theindiecorp.vconnect.activity.AddSchoolActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".activity.MessageActivity"
+        <activity android:name="com.theindiecorp.vconnect.activity.MessageActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"  />
         <activity
-            android:name=".activity.ProfileViewActivity"
+            android:name="com.theindiecorp.vconnect.activity.ProfileViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.ProfileEditActivity"
+            android:name="com.theindiecorp.vconnect.activity.ProfileEditActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
@@ -43,7 +43,7 @@
             android:value="AIzaSyDMkENRSNWFdC66_4BwIFtmfTXm0aPJ_2s" />
 
         <activity
-            android:name=".activity.LoginActivity"
+            android:name="com.theindiecorp.vconnect.activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,32 +52,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.SignUpActivity"
+            android:name="com.theindiecorp.vconnect.activity.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.ResetActivity"
+            android:name="com.theindiecorp.vconnect.activity.ResetActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.HomeActivity"
+            android:name="com.theindiecorp.vconnect.activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.EventViewActivity"
+            android:name="com.theindiecorp.vconnect.activity.EventViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.NewEventActivity"
+            android:name="com.theindiecorp.vconnect.activity.NewEventActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.BookmarksActivity"
+            android:name="com.theindiecorp.vconnect.activity.BookmarksActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.AttendeeViewActivity"
+            android:name="com.theindiecorp.vconnect.activity.AttendeeViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.NewArticleActivity"
+            android:name="com.theindiecorp.vconnect.activity.NewArticleActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.SchoolViewActivity"
+            android:name="com.theindiecorp.vconnect.activity.SchoolViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
     </application>

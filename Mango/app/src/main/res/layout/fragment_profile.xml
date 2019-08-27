@@ -25,14 +25,16 @@
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+            <TextView
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/white"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="My Profile"
-                app:titleTextColor="@android:color/black"/>
+                android:textColor="@android:color/black"
+                android:text="username"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:padding="12dp"/>
 
         </android.support.design.widget.AppBarLayout>
 

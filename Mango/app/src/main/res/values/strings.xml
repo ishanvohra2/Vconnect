@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mango</string>
+    <string name="app_name">Vconnect</string>
     <string name="action_sign_in_short">Register</string>
     <string name="email">Email</string>
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
@@ -51,5 +51,15 @@ Donec ullamcorper dictum blandit. Vestibulum porta leo vel volutpat malesuada. A
 
     <string name="Open">Mango</string>
     <string name="Close">Mango</string>
+
+    <string-array name="venues">
+        <item>Seminar Hall 06</item>
+        <item>Seminar Hall 106</item>
+        <item>Seminar Hall 206</item>
+        <item>Seminar Hall 306</item>
+        <item>Seminar Hall 406</item>
+        <item>Seminar Hall 506</item>
+        <item>AUDITORIUM</item>
+    </string-array>
 
 </resources>
