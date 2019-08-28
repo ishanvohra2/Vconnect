@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.database.DatabaseReference;
 import com.theindiecorp.vconnect.AttendeeAdapter;
 import com.theindiecorp.vconnect.R;
 import com.theindiecorp.vconnect.data.Event;
@@ -35,6 +36,11 @@ public class SearchFragment extends Fragment {
 
     mainFeedRecyclerViewAdapter adapter;
     AttendeeAdapter attendeeAdapter;
+
+    ArrayList<Event> events = new ArrayList<>();
+    ArrayList<String> userIds = new ArrayList<>();
+
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     public SearchFragment() {
         // Required empty public constructor
@@ -142,12 +148,20 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        if(userIds.isEmpty()){
+            databaseReference.child("users").addValueEventListener(userEventListener);
+        }
+
+        if(events.isEmpty()){
+            databaseReference.child("events").addValueEventListener(valueEventListener);
+        }
+
         return v;
     }
     ValueEventListener userEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            ArrayList<String> userIds = new ArrayList<>();
+            userIds = new ArrayList<>();
             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                 String userId = snapshot.getKey();
                 userIds.add(userId);
@@ -165,7 +179,7 @@ public class SearchFragment extends Fragment {
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            ArrayList<Event> events = new ArrayList<>();
+            events = new ArrayList<>();
             for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                 Event event = eventSnapshot.getValue(Event.class);
                 event.setId(eventSnapshot.getKey());

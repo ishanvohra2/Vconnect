@@ -56,11 +56,13 @@ public class BookmarkFragment extends Fragment {
                             databaseReference.child("events").child(id).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    Event event = dataSnapshot.getValue(Event.class);
-                                    event.setId(id);
-                                    events.add(event);
-                                    size = adapter.setEvents(events);
-                                    adapter.notifyDataSetChanged();
+                                    if(dataSnapshot.exists()){
+                                        Event event = dataSnapshot.getValue(Event.class);
+                                        event.setId(id);
+                                        events.add(event);
+                                        size = adapter.setEvents(events);
+                                        adapter.notifyDataSetChanged();
+                                    }
 
                                     if(events.isEmpty()){
                                         waterMark.setVisibility(View.VISIBLE);

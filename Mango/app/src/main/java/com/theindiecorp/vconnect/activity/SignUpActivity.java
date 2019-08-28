@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.theindiecorp.vconnect.R;
 import com.theindiecorp.vconnect.data.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,7 +39,7 @@ import java.util.Calendar;
 public class SignUpActivity extends AppCompatActivity {
 
     public static final int PICK_IMAGE = 100;
-    private EditText inputEmail, inputPassword, inputName;
+    private EditText inputEmail, inputPassword, inputName, userNameEt;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
@@ -59,6 +62,7 @@ public class SignUpActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         btnResetPassword = findViewById(R.id.reset_password_reset_btn);
         profilePhoto = findViewById(R.id.signup_profile_photo);
+        userNameEt = findViewById(R.id.username_et);
 //
 //        final Spinner spinner = findViewById(R.id.signup_spinner);
 //        String[] sexSpinner = new String[]{"Male", "Female", "Others"};
@@ -117,6 +121,11 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
+                if(TextUtils.isEmpty(userNameEt.getText().toString()) || userNameTaken()){
+                    Toast.makeText(getApplicationContext(), "Username Taken", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 
                 progressBar.setVisibility(View.VISIBLE);
                 //create user
@@ -151,7 +160,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     user.setSex(User.Sex.MALE);
                                     User privateUser = new User();
                                     user.setEmail(email);
-                                    user.setUsername(usernameFromEmail(email));
+                                    user.setUsername(userNameEt.getText().toString());
 
                                     writeNewUser(user, id);
                                     updatePrivateInfo(privateUser, id);
@@ -217,11 +226,29 @@ public class SignUpActivity extends AppCompatActivity {
         mDatabase.child("privateData").child(id).setValue(user);
     }
 
-    private String usernameFromEmail(String email) {
-        if (email.contains("@")) {
-            return email.split("@")[0];
-        } else {
-            return email;
-        }
+    private boolean userNameTaken() {
+        final Boolean[] flag = {false};
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    User u = snapshot.getValue(User.class);
+                    if(u.getUsername().equals(userNameEt.getText().toString())){
+                        flag[0] = true;
+                        Toast.makeText(SignUpActivity.this,"Username Taken",Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        return flag[0];
     }
 }

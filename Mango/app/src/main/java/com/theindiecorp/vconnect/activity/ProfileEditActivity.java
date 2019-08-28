@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,8 +20,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.Query;
 import com.theindiecorp.vconnect.R;
 import com.theindiecorp.vconnect.data.User;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -103,8 +106,6 @@ public class ProfileEditActivity extends AppCompatActivity {
             }
         });
 
-
-
         birthdateTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +138,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
                 birthdateTv.setText(simpleDateFormat.format(d));
             }
         };
@@ -164,55 +165,88 @@ public class ProfileEditActivity extends AppCompatActivity {
             }
         });
 
-//        databaseReference.child("privateData").child(HomeActivity.userId).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                User user = dataSnapshot.getValue(User.class);
-//                if(user != null) {
-//                    emailTv.setText(user.getEmail());
-//                    phoneNumberTv.setText(user.getNumber());
-//                    if (user.getBirthdate() != null)
-//                        birthdateTv.setText(simpleDateFormat.format(user.getBirthdate()));
-//                }else{
-//                    databaseReference.child("privateData").child(HomeActivity.userId).setValue("true");
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
+        databaseReference.child("privateData").child(HomeActivity.userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if(user != null) {
+                    emailTv.setText(user.getEmail());
+                    phoneNumberTv.setText(user.getNumber());
+                    if (user.getBirthdate() != null)
+                        birthdateTv.setText(simpleDateFormat.format(user.getBirthdate()));
+                }else{
+                    databaseReference.child("privateData").child(HomeActivity.userId).setValue("true");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         updateProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = new User();
-                user.setDisplayName(nameTv.getText().toString());
-                user.setBio(bioTv.getText().toString());
-                user.setSex(User.Sex.values()[spinner.getSelectedItemPosition()]);
-                user.setUsername(userNameTV.getText().toString());
 
-                /// private data
-                User privateUser = new User();
-                if (emailTv.getText() != null)
-                    privateUser.setEmail(emailTv.getText().toString());
-                if (phoneNumberTv.getText() != null)
-                    privateUser.setNumber(phoneNumberTv.getText().toString());
-                Date date = new Date();
-                try {
-                    date = simpleDateFormat.parse(birthdateTv.getText().toString());
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                final int[] flag = {0};
+
+                Query query = databaseReference.child("users");
+                query.orderByChild("username").equalTo(userNameTV.getText().toString()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            Toast.makeText(ProfileEditActivity.this,"Username taken",Toast.LENGTH_SHORT).show();
+                            flag[0] = 1;
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                if(flag[0] ==  1){
+                    return;
                 }
-                privateUser.setBirthdate(date);
-                databaseReference.child("users").child(HomeActivity.userId).child("displayName").setValue(user.getDisplayName());
-                databaseReference.child("users").child(HomeActivity.userId).child("bio").setValue(user.getBio());
-                databaseReference.child("users").child(HomeActivity.userId).child("sex").setValue(user.getSex());
-                databaseReference.child("privateData").child(HomeActivity.userId).setValue(privateUser);
-                databaseReference.child("users").child(HomeActivity.userId).child("username").setValue(user.getUsername());
 
-                finish();
+                if (TextUtils.isEmpty(emailTv.getText().toString())) {
+                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(nameTv.getText().toString())) {
+                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                User user = new User();
+                    user.setDisplayName(nameTv.getText().toString());
+                    user.setBio(bioTv.getText().toString());
+                    user.setSex(User.Sex.values()[spinner.getSelectedItemPosition()]);
+                    user.setUsername(userNameTV.getText().toString());
+
+                    /// private data
+                    User privateUser = new User();
+                    if (emailTv.getText() != null)
+                        privateUser.setEmail(emailTv.getText().toString());
+                    if (phoneNumberTv.getText() != null)
+                        privateUser.setNumber(phoneNumberTv.getText().toString());
+                    Date date = new Date();
+                    try {
+                        date = simpleDateFormat.parse(birthdateTv.getText().toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    privateUser.setBirthdate(date);
+                    databaseReference.child("users").child(HomeActivity.userId).child("displayName").setValue(user.getDisplayName());
+                    databaseReference.child("users").child(HomeActivity.userId).child("bio").setValue(user.getBio());
+                    databaseReference.child("users").child(HomeActivity.userId).child("sex").setValue(user.getSex());
+                    databaseReference.child("privateData").child(HomeActivity.userId).setValue(privateUser);
+                    databaseReference.child("users").child(HomeActivity.userId).child("username").setValue(user.getUsername());
+
+                    finish();
             }
 
         });

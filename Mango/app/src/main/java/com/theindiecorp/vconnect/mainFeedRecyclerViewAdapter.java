@@ -370,6 +370,8 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
 
         if(event.getType().equals("event")){
             holder.description.setVisibility(View.GONE);
+            holder.eventName.setVisibility(View.VISIBLE);
+            holder.date.setVisibility(View.VISIBLE);
         }else{
             holder.description.setVisibility(View.VISIBLE);
         }

@@ -86,18 +86,6 @@ public class EventViewActivity extends AppCompatActivity {
         final TextView venue = findViewById(R.id.event_view_location);
         LinearLayout hostNameLayout = findViewById(R.id.host_name_layout);
 
-        DatabaseReference postReference = FirebaseDatabase.getInstance().getReference();
-        postReference.child("schools").child(venueId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                venue.setText(dataSnapshot.child("name").getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         venue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,6 +165,18 @@ public class EventViewActivity extends AppCompatActivity {
 
         final Button joinBtn = findViewById(R.id.event_view_join_btn);
 
+        databaseReference.child("events").child(eventId).child("venueId").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                venue.setText(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         databaseReference.child("events").child(eventId).child("peopleCount").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -244,7 +244,6 @@ public class EventViewActivity extends AppCompatActivity {
 //                    .setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName() + " has joined your event." + eventId);
         }
     }
-
 
     public static String getProfileImageUrl(String id) {
         return "users/" + id + "/images/profile_pic/profile_pic.jpeg";

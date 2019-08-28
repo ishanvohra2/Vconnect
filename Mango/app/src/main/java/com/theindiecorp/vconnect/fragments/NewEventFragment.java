@@ -238,7 +238,8 @@ public class NewEventFragment extends Fragment {
     private void addEvent() throws ParseException{
         String eventName = this.eventName.getText().toString();
 
-        if (!TextUtils.isEmpty(eventName)) {
+        if (!TextUtils.isEmpty(eventName) && !TextUtils.isEmpty(eventDate.getText().toString())
+                && !TextUtils.isEmpty(eventTime.getText().toString())) {
 
             String id = mDatabase.push().getKey();
             String description = eventDescription.getText().toString();
