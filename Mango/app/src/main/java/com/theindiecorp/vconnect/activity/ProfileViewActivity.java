@@ -34,6 +34,7 @@ public class ProfileViewActivity extends AppCompatActivity {
     private TextView name,description,followers,postCount;
     private User user = new User();
     private Boolean followed;
+    ArrayList<Event> events = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +51,12 @@ public class ProfileViewActivity extends AppCompatActivity {
         final Button followBtn = findViewById(R.id.profile_view_follow_btn);
         final Button messageBtn = findViewById(R.id.profile_view_message_btn);
 
-        LinearLayout privateProfileBox = findViewById(R.id.watermark);
+        final LinearLayout privateProfileBox = findViewById(R.id.watermark);
 
         final RecyclerView recyclerView = findViewById(R.id.profile_view_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        ArrayList<Event> events = new ArrayList<>();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,true);
+        linearLayoutManager.scrollToPosition(events.size() - 1);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         final mainFeedRecyclerViewAdapter adapter = new mainFeedRecyclerViewAdapter(events, this);
         recyclerView.setAdapter(adapter);
@@ -106,12 +107,14 @@ public class ProfileViewActivity extends AppCompatActivity {
                     followed = true;
                     messageBtn.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.VISIBLE);
+                    privateProfileBox.setVisibility(View.GONE);
                 }
                 else{
                     followBtn.setText("Follow");
                     followed = false;
                     messageBtn.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                    privateProfileBox.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -172,10 +175,14 @@ public class ProfileViewActivity extends AppCompatActivity {
                 if(followed){
                     databaseReference.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("followers")
                             .child(userId).removeValue();
+                    recyclerView.setVisibility(View.GONE);
+                    privateProfileBox.setVisibility(View.VISIBLE);
                 }
                 else{
                     databaseReference.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("followers")
                             .child(userId).setValue(true);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    privateProfileBox.setVisibility(View.GONE);
                 }
             }
         });
@@ -188,6 +195,8 @@ public class ProfileViewActivity extends AppCompatActivity {
             }
         });
 
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
+
     }
 
     @Override
@@ -197,5 +206,21 @@ public class ProfileViewActivity extends AppCompatActivity {
                 finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(false);
     }
 }

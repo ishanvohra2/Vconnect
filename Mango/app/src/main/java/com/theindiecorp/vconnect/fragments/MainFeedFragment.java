@@ -86,7 +86,10 @@ public class MainFeedFragment extends Fragment {
 
         //posts
         final RecyclerView recyclerView = view.findViewById(R.id.main_feed_my_school_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,true);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
 //        recyclerView.setNestedScrollingEnabled(false);
 
         ArrayList<Event> events = new ArrayList<>();
@@ -132,6 +135,7 @@ public class MainFeedFragment extends Fragment {
                 }
                 adapter.setEvents(events);
                 adapter.notifyDataSetChanged();
+                linearLayoutManager.scrollToPosition(events.size() - 1);
 
                 if(!TextUtils.isEmpty(eventId) && EventFromNotification != null){
                     recyclerView.scrollToPosition(events.indexOf(EventFromNotification));

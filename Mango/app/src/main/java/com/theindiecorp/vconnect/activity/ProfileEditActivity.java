@@ -266,12 +266,14 @@ public class ProfileEditActivity extends AppCompatActivity {
                     databaseReference.child("users").child(HomeActivity.userId).child("sex").setValue(user.getSex());
                     databaseReference.child("privateData").child(HomeActivity.userId).setValue(privateUser);
                     databaseReference.child("users").child(HomeActivity.userId).child("username").setValue(user.getUsername());
-                    databaseReference.child("users").child(HomeActivity.userId).child("privateProfile").setValue(user.getPrivateProfile());
+                    //databaseReference.child("users").child(HomeActivity.userId).child("privateProfile").setValue(user.getPrivateProfile());
 
                     finish();
             }
 
         });
+
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
     }
 
     public void openGallery() {
@@ -312,7 +314,22 @@ public class ProfileEditActivity extends AppCompatActivity {
 
             }
         });
-
         return flag[0];
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(false);
     }
 }

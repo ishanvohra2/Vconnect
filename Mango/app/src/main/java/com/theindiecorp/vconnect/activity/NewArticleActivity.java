@@ -173,6 +173,10 @@ public class NewArticleActivity extends AppCompatActivity implements AdapterView
         } else {
             Toast.makeText(this, "You should enter some text first", Toast.LENGTH_LONG).show();
         }
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
     }
 
     @Override
@@ -183,5 +187,21 @@ public class NewArticleActivity extends AppCompatActivity implements AdapterView
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(false);
     }
 }

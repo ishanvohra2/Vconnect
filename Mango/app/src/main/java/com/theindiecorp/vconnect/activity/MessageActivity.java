@@ -93,6 +93,10 @@ public class MessageActivity extends AppCompatActivity {
                 messageEt.setText("");
             }
         });
+
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
     }
 
     private void sendMessage(String toString) {
@@ -118,5 +122,23 @@ public class MessageActivity extends AppCompatActivity {
 
         databaseReference.child("messages").child(receiverId)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).setValue(text);
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(false);
     }
 }

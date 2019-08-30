@@ -87,7 +87,6 @@ public class InboxItemAdapter extends RecyclerView.Adapter<InboxItemAdapter.MyVi
             }
         });
 
-
         databaseReference.child("messages").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(receiverId)
                 .addValueEventListener(new ValueEventListener() {
                     @Override

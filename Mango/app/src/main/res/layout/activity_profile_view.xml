@@ -240,12 +240,13 @@
                     android:id="@+id/private_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="This profile is private"
+                    android:text="You need to follow first to see the posts"
                     android:textStyle="bold"
                     android:fontFamily="sans-serif-thin"
                     android:textSize="20sp"
                     android:textColor="@android:color/black"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center"
+                    android:layout_marginBottom="12dp"/>
 
                 <ImageView
                     android:layout_width="150dp"

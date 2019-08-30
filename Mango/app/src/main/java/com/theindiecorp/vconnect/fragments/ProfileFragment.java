@@ -72,6 +72,7 @@ public class ProfileFragment extends Fragment {
     private DrawerLayout dl;
     private ActionBarDrawerToggle t;
     private NavigationView nv;
+    ArrayList<Event> events = new ArrayList<>();
 
     public static ProfileFragment newInstance(String userId, Boolean editable) {
         ProfileFragment fragment = new ProfileFragment();
@@ -133,7 +134,8 @@ public class ProfileFragment extends Fragment {
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         RecyclerView recyclerView = v.findViewById(R.id.my_profile_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,true);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         Button editProfileBtn = v.findViewById(R.id.profile_edit_porfile_btn);
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
@@ -238,8 +240,6 @@ public class ProfileFragment extends Fragment {
 
         followerIds = new ArrayList<>();
 
-        ArrayList<Event> events = new ArrayList<>();
-
         final mainFeedRecyclerViewAdapter adapter = new mainFeedRecyclerViewAdapter(events, getContext());
         recyclerView.setAdapter(adapter);
 
@@ -301,7 +301,6 @@ public class ProfileFragment extends Fragment {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Event> events = new ArrayList<>();
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     final Event event = eventSnapshot.getValue(Event.class);
                     event.setId(eventSnapshot.getKey());
@@ -310,6 +309,7 @@ public class ProfileFragment extends Fragment {
                 adapter.setEvents(events);
                 adapter.notifyDataSetChanged();
                 postCount.setText(events.size() + "");
+                linearLayoutManager.scrollToPosition(events.size() - 1);
             }
 
             @Override

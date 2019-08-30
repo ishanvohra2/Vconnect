@@ -69,7 +69,25 @@ public class BookmarksActivity extends AppCompatActivity {
             }
         });
 
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
+
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(false);
+    }
 }

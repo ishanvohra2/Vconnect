@@ -86,14 +86,6 @@ public class EventViewActivity extends AppCompatActivity {
         final TextView venue = findViewById(R.id.event_view_location);
         LinearLayout hostNameLayout = findViewById(R.id.host_name_layout);
 
-
-        venue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(EventViewActivity.this,SchoolViewActivity.class).putExtra("schoolId",venueId));
-            }
-        });
-
         eventNameTv.setText(eventName);
         hostNameTv.setText(hostName);
         hostedByTv.setText("Hosted by " + hostName);
@@ -243,6 +235,10 @@ public class EventViewActivity extends AppCompatActivity {
 //            databaseReference.child("notifications").child(hostId).child(date)
 //                    .setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName() + " has joined your event." + eventId);
         }
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
     }
 
     public static String getProfileImageUrl(String id) {
@@ -256,5 +252,21 @@ public class EventViewActivity extends AppCompatActivity {
                 finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(false);
     }
 }

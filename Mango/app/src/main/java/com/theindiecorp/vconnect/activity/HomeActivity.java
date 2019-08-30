@@ -109,6 +109,9 @@ public class HomeActivity extends AppCompatActivity {
         loadFragment(new MainFeedFragment());
 
         // ended here
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
     }
 
     private void sendRegistrationToServer(String token) {
@@ -127,4 +130,21 @@ public class HomeActivity extends AppCompatActivity {
         sendRegistrationToServer(token);
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(userId).child("isOnline").setValue(true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(false);
+    }
+
 }
