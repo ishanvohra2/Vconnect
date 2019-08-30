@@ -221,6 +221,15 @@ public class ProfileEditActivity extends AppCompatActivity {
                     return;
                 }
 
+                if(userNameTaken()){
+                    return;
+                }
+
+                if(TextUtils.isEmpty(userNameTV.getText().toString())){
+                    Toast.makeText(getApplicationContext(), "Enter user name!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 User user = new User();
                     user.setDisplayName(nameTv.getText().toString());
                     user.setBio(bioTv.getText().toString());
@@ -267,5 +276,30 @@ public class ProfileEditActivity extends AppCompatActivity {
                     .setPhotoUri(Uri.parse(path)).build();
             FirebaseAuth.getInstance().getCurrentUser().updateProfile(request);
         }
+    }
+    private boolean userNameTaken() {
+        final Boolean[] flag = {false};
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    User u = snapshot.getValue(User.class);
+                    if(u.getUsername().equals(userNameTV.getText().toString())){
+                        flag[0] = true;
+                        Toast.makeText(ProfileEditActivity.this,"Username Taken",Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        return flag[0];
     }
 }

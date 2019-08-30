@@ -121,8 +121,12 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(TextUtils.isEmpty(userNameEt.getText().toString()) || userNameTaken()){
-                    Toast.makeText(getApplicationContext(), "Username Taken", Toast.LENGTH_SHORT).show();
+                if(TextUtils.isEmpty(userNameEt.getText().toString())){
+                    Toast.makeText(getApplicationContext(), "Enter a username", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(userNameTaken()){
                     return;
                 }
 

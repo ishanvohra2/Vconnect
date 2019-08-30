@@ -124,7 +124,7 @@ public class SearchFragment extends Fragment {
                 q.addValueEventListener(valueEventListener);
 
                 Query q1 = FirebaseDatabase.getInstance().getReference("users")
-                        .orderByChild("displayName")
+                        .orderByChild("username")
                         .startAt(query)
                         .endAt(query + "\uf8ff");
                 q1.addValueEventListener(userEventListener);
@@ -140,7 +140,7 @@ public class SearchFragment extends Fragment {
                 q.addListenerForSingleValueEvent(valueEventListener);
 
                 Query q1 = FirebaseDatabase.getInstance().getReference("users")
-                        .orderByChild("displayName")
+                        .orderByChild("username")
                         .startAt(newText)
                         .endAt(newText + "\uf8ff");
                 q1.addValueEventListener(userEventListener);
