@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.database.Query;
 import com.theindiecorp.vconnect.activity.AttendeeViewActivity;
 import com.theindiecorp.vconnect.activity.CommentActivity;
 import com.theindiecorp.vconnect.activity.EventViewActivity;
@@ -138,7 +139,25 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.child("reports").child(eventId).child("message").setValue(messageTxt.getText().toString());
+                databaseReference.child("reports").child(eventId).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
+                databaseReference.child("reports").child(eventId).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        ArrayList<String> reports = new ArrayList<>();
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            reports.add(snapshot.getKey());
+                        }
+                        if(reports.size()>=50){
+                            databaseReference.child("events").child(eventId).removeValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
                 dialog.dismiss();
             }
         });
@@ -222,7 +241,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
         holder.title.setText(event.getHostName());
         holder.description.setText(event.getDescription());
         holder.eventName.setText(event.getEventName());
-        holder.peopleCount.setText(String.valueOf(event.getPeopleCount()) + " going");
+        holder.peopleCount.setText((event.getPeopleCount()) + " going");
 
 
         String date = event.getDate();

@@ -90,6 +90,7 @@ public class MessageActivity extends AppCompatActivity {
                     return;
                 }
                 sendMessage(messageEt.getText().toString());
+                messageEt.setText("");
             }
         });
     }
