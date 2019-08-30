@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.theindiecorp.vconnect.R;
@@ -49,7 +50,9 @@ public class ProfileViewActivity extends AppCompatActivity {
         final Button followBtn = findViewById(R.id.profile_view_follow_btn);
         final Button messageBtn = findViewById(R.id.profile_view_message_btn);
 
-        RecyclerView recyclerView = findViewById(R.id.profile_view_recycler_view);
+        LinearLayout privateProfileBox = findViewById(R.id.watermark);
+
+        final RecyclerView recyclerView = findViewById(R.id.profile_view_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         ArrayList<Event> events = new ArrayList<>();
@@ -81,12 +84,37 @@ public class ProfileViewActivity extends AppCompatActivity {
         databaseReference.child("users").child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                user = dataSnapshot.getValue(User.class);
                 name.setText(dataSnapshot.child("displayName").getValue(String.class));
                 description.setText(dataSnapshot.child("bio").getValue(String.class));
                 if(TextUtils.isEmpty(description.getText())){
                     description.setVisibility(View.GONE);
                 }
             }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        databaseReference.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("followers")
+                .child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    followBtn.setText("Followed");
+                    followed = true;
+                    messageBtn.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+                else{
+                    followBtn.setText("Follow");
+                    followed = false;
+                    messageBtn.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -113,29 +141,6 @@ public class ProfileViewActivity extends AppCompatActivity {
 
             }
         });
-
-        databaseReference.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("followers")
-                .child(userId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    followBtn.setText("Followed");
-                    followed = true;
-                    messageBtn.setVisibility(View.VISIBLE);
-                }
-                else{
-                    followBtn.setText("Follow");
-                    followed = false;
-                    messageBtn.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
 
         DatabaseReference  followerReference = FirebaseDatabase.getInstance().getReference();
         followerReference.child("users").addValueEventListener(new ValueEventListener() {

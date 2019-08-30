@@ -161,6 +161,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     User privateUser = new User();
                                     user.setEmail(email);
                                     user.setUsername(userNameEt.getText().toString());
+                                    user.setPrivateProfile("Public");
 
                                     writeNewUser(user, id);
                                     updatePrivateInfo(privateUser, id);

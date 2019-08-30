@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.Query;
@@ -50,6 +51,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     TextView memberSinceTv, locationTv, languagesTv, birthdateTv;
     Button updateProfileBtn;
     ImageView profilePhoto;
+    ToggleButton privateProfileBtn;
 
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
@@ -85,6 +87,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         updateProfileBtn = findViewById(R.id.profile_edit_update_profile_btn);
         memberSinceTv = findViewById(R.id.profile_edit_member_since_tv);
         userNameTV = findViewById(R.id.profile_edit_username);
+        privateProfileBtn = findViewById(R.id.toggle);
 
         profilePhoto = findViewById(R.id.profile_edit_photo);
 
@@ -174,6 +177,8 @@ public class ProfileEditActivity extends AppCompatActivity {
                     phoneNumberTv.setText(user.getNumber());
                     if (user.getBirthdate() != null)
                         birthdateTv.setText(simpleDateFormat.format(user.getBirthdate()));
+                    if(user.getPrivateProfile() != null && user.getPrivateProfile().equals("Private"))
+                        privateProfileBtn.setText(privateProfileBtn.getTextOn());
                 }else{
                     databaseReference.child("privateData").child(HomeActivity.userId).setValue("true");
                 }
@@ -239,12 +244,20 @@ public class ProfileEditActivity extends AppCompatActivity {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+                    if(privateProfileBtn.getText().equals("OFF"))
+                    {
+                        user.setPrivateProfile("Public");
+                    }
+                    else{
+                        user.setPrivateProfile("Private");
+                    }
                     privateUser.setBirthdate(date);
                     databaseReference.child("users").child(HomeActivity.userId).child("displayName").setValue(user.getDisplayName());
                     databaseReference.child("users").child(HomeActivity.userId).child("bio").setValue(user.getBio());
                     databaseReference.child("users").child(HomeActivity.userId).child("sex").setValue(user.getSex());
                     databaseReference.child("privateData").child(HomeActivity.userId).setValue(privateUser);
                     databaseReference.child("users").child(HomeActivity.userId).child("username").setValue(user.getUsername());
+                    databaseReference.child("users").child(HomeActivity.userId).child("privateProfile").setValue(user.getPrivateProfile());
 
                     finish();
             }

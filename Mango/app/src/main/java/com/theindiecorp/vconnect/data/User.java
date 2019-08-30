@@ -22,6 +22,15 @@ public class User {
     String joinedOn;
     private Date birthdate;
     private ArrayList<String> eventIds;
+    private String privateProfile;
+
+    public String getPrivateProfile() {
+        return privateProfile;
+    }
+
+    public void setPrivateProfile(String privateProfile) {
+        this.privateProfile = privateProfile;
+    }
 
     public Date getBirthdate() {
         return birthdate;

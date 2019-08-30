@@ -25,11 +25,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -226,7 +226,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/feed_main_recycler_view_item"
-                android:scrollbars="vertical"/>
+                android:scrollbars="vertical"
+                android:visibility="visible"/>
+
+            <LinearLayout
+                android:id="@+id/watermark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/private_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="This profile is private"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-thin"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/black"
+                    android:textAlignment="center"/>
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/shield"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
