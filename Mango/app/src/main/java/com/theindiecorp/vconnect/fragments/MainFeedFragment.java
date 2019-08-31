@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class MainFeedFragment extends Fragment {
@@ -87,7 +88,7 @@ public class MainFeedFragment extends Fragment {
         //posts
         final RecyclerView recyclerView = view.findViewById(R.id.main_feed_my_school_recycler_view);
 
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,true);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
 
         recyclerView.setLayoutManager(linearLayoutManager);
 //        recyclerView.setNestedScrollingEnabled(false);
@@ -126,16 +127,18 @@ public class MainFeedFragment extends Fragment {
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     final Event event = eventSnapshot.getValue(Event.class);
                     event.setId(eventSnapshot.getKey());
-                    if(followingUserIds.contains(event.getHostId()) || event.getHostId().equals(userId)){
-                        events.add(event);
-                    }
-                    if(eventSnapshot.getKey().equals(eventId)){
-                        EventFromNotification = event;
+                    if(!eventSnapshot.child("isPrivate").exists()){
+                        if(followingUserIds.contains(event.getHostId()) || event.getHostId().equals(userId)){
+                            events.add(event);
+                        }
+                        if(eventSnapshot.getKey().equals(eventId)){
+                            EventFromNotification = event;
+                        }
                     }
                 }
+                Collections.reverse(events);
                 adapter.setEvents(events);
                 adapter.notifyDataSetChanged();
-                linearLayoutManager.scrollToPosition(events.size() - 1);
 
                 if(!TextUtils.isEmpty(eventId) && EventFromNotification != null){
                     recyclerView.scrollToPosition(events.indexOf(EventFromNotification));

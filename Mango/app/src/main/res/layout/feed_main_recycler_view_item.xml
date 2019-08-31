@@ -190,10 +190,18 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/delete_post_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="HIDE POST"
+        android:background="@drawable/button_background_stroke"
+        android:textColor="#ff0000"
+        android:layout_margin="12dp"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="#f0f0f0" />
-
 
 </LinearLayout>

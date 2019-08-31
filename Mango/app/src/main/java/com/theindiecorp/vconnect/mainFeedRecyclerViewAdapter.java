@@ -45,6 +45,7 @@ import com.google.firebase.storage.StorageReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRecyclerViewAdapter.MyViewHolder> {
 
@@ -77,6 +78,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
         private ImageView profileImg, mainImg, bookmarkBtn, menuImg,likeBtn,commentBtn;
         LinearLayout profileBar;
         Boolean bookmarked,liked;
+        private Button deleteBtn;
 
 
         public MyViewHolder(View itemView) {
@@ -95,6 +97,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
             this.likeBtn = itemView.findViewById(R.id.main_item_like_btn);
             this.likeCount = itemView.findViewById(R.id.main_post_likes);
             this.commentBtn = itemView.findViewById(R.id.main_item_comment_btn);
+            this.deleteBtn = itemView.findViewById(R.id.delete_post_btn);
         }
     }
 
@@ -196,6 +199,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+
                         switch (item.getItemId()) {
                             case R.id.see_people_who_are_going:
                                 Intent intent = new Intent(context, AttendeeViewActivity.class);
@@ -244,7 +248,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
         holder.peopleCount.setText((event.getPeopleCount()) + " going");
 
 
-        String date = event.getDate();
+        final String date = event.getDate();
         holder.date.setText(date);
 
         holder.title.setOnClickListener(new View.OnClickListener() {
@@ -394,6 +398,21 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
         }else{
             holder.description.setVisibility(View.VISIBLE);
         }
+        if(event.getHostId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+           holder.deleteBtn.setVisibility(View.VISIBLE);
+        }
+        else
+            holder.deleteBtn.setVisibility(View.GONE);
+
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(event.getPrivate() == null ){
+                    dataSet.remove(listPosition);
+                    databaseReference.child("events").child(event.getId()).child("isPrivate").setValue(true);
+                }
+            }
+        });
     }
 
     private void like(Boolean liked,String id, String hostName, String hostId){

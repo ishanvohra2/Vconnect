@@ -48,6 +48,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.theindiecorp.vconnect.mainFeedRecyclerViewAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class ProfileFragment extends Fragment {
@@ -134,7 +135,7 @@ public class ProfileFragment extends Fragment {
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         RecyclerView recyclerView = v.findViewById(R.id.my_profile_recycler_view);
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,true);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         Button editProfileBtn = v.findViewById(R.id.profile_edit_porfile_btn);
@@ -304,12 +305,14 @@ public class ProfileFragment extends Fragment {
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     final Event event = eventSnapshot.getValue(Event.class);
                     event.setId(eventSnapshot.getKey());
-                    events.add(event);
+                    if(!eventSnapshot.child("isPrivate").exists()){
+                        events.add(event);
+                    }
                 }
+                Collections.reverse(events);
                 adapter.setEvents(events);
                 adapter.notifyDataSetChanged();
                 postCount.setText(events.size() + "");
-                linearLayoutManager.scrollToPosition(events.size() - 1);
             }
 
             @Override

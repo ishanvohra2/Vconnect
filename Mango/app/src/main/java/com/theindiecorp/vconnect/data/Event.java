@@ -17,6 +17,15 @@ public class Event {
     private String id,venueId;
     private String hostName;
     private int likeCount;
+    private Boolean isPrivate;
+
+    public Boolean getPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(Boolean aPrivate) {
+        isPrivate = aPrivate;
+    }
 
     public int getLikeCount() {
         return likeCount;
