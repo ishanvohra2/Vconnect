@@ -183,7 +183,9 @@ public class SearchFragment extends Fragment {
             for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                 Event event = eventSnapshot.getValue(Event.class);
                 event.setId(eventSnapshot.getKey());
-                events.add(event);
+                if(!eventSnapshot.child("isPrivate").exists()){
+                    events.add(event);
+                }
             }
             adapter.setEvents(events);
             adapter.notifyDataSetChanged();

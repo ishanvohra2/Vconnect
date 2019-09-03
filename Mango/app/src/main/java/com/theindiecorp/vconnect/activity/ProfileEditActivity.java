@@ -225,10 +225,10 @@ public class ProfileEditActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                if(userNameTaken()){
-                    return;
-                }
+//
+//                if(userNameTaken()){
+//                    return;
+//                }
 
                 if(TextUtils.isEmpty(userNameTV.getText().toString())){
                     Toast.makeText(getApplicationContext(), "Enter user name!", Toast.LENGTH_SHORT).show();

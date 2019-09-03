@@ -54,7 +54,8 @@
                     android:layout_gravity="center"
                     android:layout_margin="12dp"
                     android:text="Member since 26 Jan 2018"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:visibility="gone"/>
 
                 <!-- name -->
                 <LinearLayout
@@ -374,7 +375,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"

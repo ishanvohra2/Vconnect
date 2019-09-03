@@ -1,6 +1,8 @@
 package com.theindiecorp.vconnect.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +17,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.theindiecorp.vconnect.R;
 import com.theindiecorp.vconnect.data.Event;
 import com.theindiecorp.vconnect.data.User;
@@ -35,6 +42,7 @@ public class ProfileViewActivity extends AppCompatActivity {
     private User user = new User();
     private Boolean followed;
     ArrayList<Event> events = new ArrayList<>();
+    private CircularImageView profile_pic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,7 @@ public class ProfileViewActivity extends AppCompatActivity {
         postCount = findViewById(R.id.profile_view_posts_count_tv);
         final Button followBtn = findViewById(R.id.profile_view_follow_btn);
         final Button messageBtn = findViewById(R.id.profile_view_message_btn);
+        profile_pic = findViewById(R.id.profile_photo);
 
         final LinearLayout privateProfileBox = findViewById(R.id.watermark);
 
@@ -79,6 +88,8 @@ public class ProfileViewActivity extends AppCompatActivity {
 
         if(userId.equals(HomeActivity.userId)){
             followBtn.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            privateProfileBox.setVisibility(View.GONE);
         }
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -132,7 +143,9 @@ public class ProfileViewActivity extends AppCompatActivity {
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     final Event event = eventSnapshot.getValue(Event.class);
                     event.setId(eventSnapshot.getKey());
-                    events.add(event);
+                    if(!dataSnapshot.child("isPrivate").exists()){
+                        events.add(event);
+                    }
                 }
                 adapter.setEvents(events);
                 adapter.notifyDataSetChanged();
@@ -194,6 +207,19 @@ public class ProfileViewActivity extends AppCompatActivity {
                         .putExtra("userid",userId));
             }
         });
+
+        final Context context = this;
+        if (context != null) {
+            String path = "users/" + userId + "/images/profile_pic/profile_pic.jpeg";
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+            storageReference.child(path).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(context).load(uri).into(profile_pic);
+                }
+            });
+        }
+
 
         databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
 
