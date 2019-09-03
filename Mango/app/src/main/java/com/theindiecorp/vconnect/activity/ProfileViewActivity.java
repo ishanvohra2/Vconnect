@@ -143,7 +143,7 @@ public class ProfileViewActivity extends AppCompatActivity {
                 for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
                     final Event event = eventSnapshot.getValue(Event.class);
                     event.setId(eventSnapshot.getKey());
-                    if(!dataSnapshot.child("isPrivate").exists()){
+                    if(!eventSnapshot.child("isPrivate").exists()){
                         events.add(event);
                     }
                 }
