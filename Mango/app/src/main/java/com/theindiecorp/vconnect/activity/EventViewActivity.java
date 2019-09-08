@@ -69,8 +69,8 @@ public class EventViewActivity extends AppCompatActivity {
         final String eventId = getIntent().getStringExtra("eventId");
         final String hostId = getIntent().getStringExtra("hostId");
         final ArrayList<String> userIds = getIntent().getStringArrayListExtra("userIds");
-        Date date = new Date();
-        date.setTime(getIntent().getLongExtra("date", 0L));
+
+        String dateTxt = getIntent().getStringExtra("date");
 
 
         TextView eventNameTv = findViewById(R.id.event_view_event_name);
@@ -85,6 +85,14 @@ public class EventViewActivity extends AppCompatActivity {
         Button messageBtn = findViewById(R.id.event_view_message_btn);
         final TextView venue = findViewById(R.id.event_view_location);
         LinearLayout hostNameLayout = findViewById(R.id.host_name_layout);
+        TextView commentTv = findViewById(R.id.comment_tv);
+
+        commentTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(EventViewActivity.this, CommentActivity.class).putExtra("eventId", eventId));
+            }
+        });
 
         eventNameTv.setText(eventName);
         hostNameTv.setText(hostName);
@@ -105,8 +113,7 @@ public class EventViewActivity extends AppCompatActivity {
             }
         });
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, dd MMMM\nhh:mm a");
-        dateTv.setText(simpleDateFormat.format(date));
+        dateTv.setText(dateTxt);
 
         peopleCountTv.setOnClickListener(new View.OnClickListener() {
             @Override
