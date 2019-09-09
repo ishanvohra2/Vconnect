@@ -127,6 +127,10 @@ public class ProfileFragment extends Fragment {
                     startActivity(new Intent(getContext(), LoginActivity.class));
                 } else if (id == R.id.forgot_your_password) {
                     startActivity(new Intent(getContext(), ResetActivity.class));
+                }else if (id == R.id.delete) {
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.home_frame_container, new HidePostsFragment());
+                    transaction.commit();
                 }
                 return true;
             }

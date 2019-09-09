@@ -56,7 +56,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
 
     private boolean isBookmarked = false;
     private boolean isLiked = false;
-    int likeCounter = 0;
+
 
     Context context;
     LinearLayout layout;
@@ -170,6 +170,8 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int listPosition) {
         final Event event = dataSet.get(listPosition);
+
+        final int[] likeCounter = {0};
 
         // profile image reference
         StorageReference profileImageReference = storage.getReference().child("users/" + event.getHostId() + "/images/profile_pic/profile_pic.jpeg");
@@ -290,13 +292,11 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
             }
         });
 
-        databaseReference.child("events").child(event.getId()).child("likeCount").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("events").child(event.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if( dataSnapshot.getValue(Integer.class) != null){
-                    likeCounter = dataSnapshot.getValue(Integer.class);
-                    holder.likeCount.setText(likeCounter + "");
-                }
+                likeCounter[0] = dataSnapshot.child("likeCount").getValue(Integer.class);
+                holder.likeCount.setText(likeCounter[0] + "");
             }
 
             @Override
@@ -318,7 +318,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
         holder.likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                like(holder.liked,event.getId(),event.getHostName(),event.getHostId());
+                like(holder.liked,event.getId(),likeCounter[0]);
             }
         });
 
@@ -404,18 +404,21 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
         else
             holder.deleteBtn.setVisibility(View.GONE);
 
+        if(event.getPrivate() != null && event.getPrivate()){
+            holder.deleteBtn.setVisibility(View.GONE);
+        }
+
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(event.getPrivate() == null ){
-                    dataSet.remove(listPosition);
                     databaseReference.child("events").child(event.getId()).child("isPrivate").setValue(true);
                 }
             }
         });
     }
 
-    private void like(Boolean liked,String id, String hostName, String hostId){
+    private void like(Boolean liked,String id,int likeCounter){
         Calendar mCurrentTime = Calendar.getInstance();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String date = formatter.format(mCurrentTime.getTime());
@@ -431,8 +434,6 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
             databaseReference.child("likes").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(id)
                     .setValue(true);
             databaseReference.child("events").child(id).child("likeCount").setValue(likeCounter+1);
-//            databaseReference.child("notifications").child(hostId).child(date)
-//                    .setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName() + " has liked your event." + id);
         }
     }
 

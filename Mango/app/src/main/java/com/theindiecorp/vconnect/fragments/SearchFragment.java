@@ -23,6 +23,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SearchFragment extends Fragment {
 
@@ -187,6 +188,7 @@ public class SearchFragment extends Fragment {
                     events.add(event);
                 }
             }
+            Collections.reverse(events);
             adapter.setEvents(events);
             adapter.notifyDataSetChanged();
         }
