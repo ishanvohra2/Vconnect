@@ -166,6 +166,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     user.setEmail(email);
                                     user.setUsername(userNameEt.getText().toString());
                                     user.setPrivateProfile("Public");
+                                    user.setPoints(100);
 
                                     writeNewUser(user, id);
                                     updatePrivateInfo(privateUser, id);
@@ -224,6 +225,8 @@ public class SignUpActivity extends AppCompatActivity {
     private void writeNewUser(User user, String id) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(id).setValue(user);
+
+        mDatabase.child("pointsHistory").child(auth.getCurrentUser().getUid()).child("regPoints").setValue(100);
     }
 
     private void updatePrivateInfo(User user, String id) {

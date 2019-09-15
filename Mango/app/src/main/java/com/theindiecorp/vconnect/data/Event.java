@@ -16,8 +16,16 @@ public class Event {
     private String imgUrl;
     private String id,venueId;
     private String hostName;
-    private int likeCount;
+    private int likeCount,points;
     private Boolean isPrivate;
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
 
     public Boolean getPrivate() {
         return isPrivate;

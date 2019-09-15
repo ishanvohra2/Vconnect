@@ -404,16 +404,31 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
         else
             holder.deleteBtn.setVisibility(View.GONE);
 
-        if(event.getPrivate() != null && event.getPrivate()){
-            holder.deleteBtn.setVisibility(View.GONE);
-        }
+        databaseReference.child("events").child(event.getId()).child("isPrivate").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    holder.deleteBtn.setText("Unhide Post");
+                }
+                else{
+                    holder.deleteBtn.setText("Hide Post");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(event.getPrivate() == null ){
+                if(holder.deleteBtn.getText().equals("Hide Post"))
                     databaseReference.child("events").child(event.getId()).child("isPrivate").setValue(true);
-                }
+                else
+                    databaseReference.child("events").child(event.getId()).child("isPrivate").removeValue();
+                dataSet.remove(listPosition);
             }
         });
     }

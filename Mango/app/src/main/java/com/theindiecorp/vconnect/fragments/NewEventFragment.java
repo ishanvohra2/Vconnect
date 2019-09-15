@@ -35,12 +35,16 @@ import android.widget.Toast;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theindiecorp.vconnect.R;
+import com.theindiecorp.vconnect.activity.HomeActivity;
 import com.theindiecorp.vconnect.activity.NewEventActivity;
 import com.theindiecorp.vconnect.data.Event;
 
@@ -59,9 +63,8 @@ public class NewEventFragment extends Fragment {
     private ImageView image;
     Uri imgUri;
     private static final int PICK_IMAGE = 100;
-    private EditText totalSpots;
+    private EditText totalSpots,locationEt;
     private TextView eventDate, eventTime;
-    Spinner locationSpinner;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -73,13 +76,14 @@ public class NewEventFragment extends Fragment {
     ArrayList<String> schoolIds = new ArrayList<>();
     String venue,venueId;
     final List<String> schools = new ArrayList<>();
+    int userPoints;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_event,container,false);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("events");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         eventName = view.findViewById(R.id.eventName);
         eventDescription = view.findViewById(R.id.eventDescription);
@@ -89,28 +93,13 @@ public class NewEventFragment extends Fragment {
         totalSpots = view.findViewById(R.id.totalSpots);
         eventDate = view.findViewById(R.id.dateText);
         eventTime = view.findViewById(R.id.new_event_time_tv);
-        locationSpinner = view.findViewById(R.id.new_event_location_tv);
+        locationEt = view.findViewById(R.id.new_event_location_tv);
 
         Button moveToArticleBtn = view.findViewById(R.id.share_article_btn);
         moveToArticleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loadFragment(new NewPostFragment());
-            }
-        });
-
-        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(getContext(),R.array.venues,android.R.layout.simple_spinner_item);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        locationSpinner.setAdapter(arrayAdapter);
-        locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
-                venue = parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
 
@@ -172,6 +161,19 @@ public class NewEventFragment extends Fragment {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("users").child(HomeActivity.userId).child("points").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userPoints = dataSnapshot.getValue(Integer.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
@@ -238,8 +240,8 @@ public class NewEventFragment extends Fragment {
     private void addEvent() throws ParseException{
         String eventName = this.eventName.getText().toString();
 
-        if (!TextUtils.isEmpty(eventName) && !TextUtils.isEmpty(eventDate.getText().toString())
-                && !TextUtils.isEmpty(eventTime.getText().toString())) {
+        if (!TextUtils.isEmpty(eventName) && !TextUtils.isEmpty(eventDate.getText().toString() )
+                && !TextUtils.isEmpty(eventTime.getText().toString()) && !TextUtils.isEmpty(locationEt.getText().toString())) {
 
             String id = mDatabase.push().getKey();
             String description = eventDescription.getText().toString();
@@ -259,9 +261,12 @@ public class NewEventFragment extends Fragment {
             event.setPeopleCount(0);
             event.setTotalSpots(total);
             event.setType("event");
-            event.setVenueId(venue);
-            mDatabase.child(id).setValue(event);
-            Toast.makeText(getContext(), "Event Added", Toast.LENGTH_LONG).show();
+            event.setVenueId(locationEt.getText().toString());
+            event.setPoints(5);
+
+            mDatabase.child("events").child(id).setValue(event);
+            mDatabase.child("users").child(event.getHostId()).child("points").setValue(userPoints + 5);
+            Toast.makeText(getContext(), "5 Points Rewarded!", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(getContext(), "You should enter a Event Name", Toast.LENGTH_LONG).show();
         }

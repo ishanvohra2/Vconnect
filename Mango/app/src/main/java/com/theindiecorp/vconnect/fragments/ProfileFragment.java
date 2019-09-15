@@ -132,6 +132,11 @@ public class ProfileFragment extends Fragment {
                     transaction.replace(R.id.home_frame_container, new HidePostsFragment());
                     transaction.commit();
                 }
+                else if(id == R.id.rewards_points){
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.home_frame_container, new RewardPointsFragment());
+                    transaction.commit();
+                }
                 return true;
             }
         });

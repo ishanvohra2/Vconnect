@@ -12,8 +12,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.theindiecorp.vconnect.fragments.NewPostFragment;
 import com.theindiecorp.vconnect.fragments.MainFeedFragment;
@@ -27,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public static final String TAG = "stupid"; // TODO
     public static String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    public static int points;
     public static String userEmail;
     String eventIdFromIntent = "";
 
@@ -112,6 +116,20 @@ public class HomeActivity extends AppCompatActivity {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);
+
+        databaseReference.child("users").child(HomeActivity.userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("points").exists()){
+                    points = dataSnapshot.child("points").getValue(Integer.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void sendRegistrationToServer(String token) {

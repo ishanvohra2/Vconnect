@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.theindiecorp.vconnect.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -108,8 +111,23 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
-                                    onAuthSuccess(task.getResult().getUser());
+                                    final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                                    databaseReference.child("users").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if(!dataSnapshot.child("points").exists()){
+                                                databaseReference.child("users").child(auth.getCurrentUser().getUid()).child("points").setValue(100);
+                                                databaseReference.child("pointsHistory").child(auth.getCurrentUser().getUid()).child("regPoints").setValue(100);
+                                            }
+                                        }
 
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+                                    onAuthSuccess(task.getResult().getUser());
                                 }
                             }
                         });
@@ -125,8 +143,5 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-
-
 }
 
