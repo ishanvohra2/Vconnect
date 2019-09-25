@@ -70,6 +70,7 @@ public class MessageActivity extends AppCompatActivity {
                         if(dataSnapshot.exists()){
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                                 Text t = snapshot.getValue(Text.class);
+                                t.setRead(true);
                                 texts.add(t);
                             }
                         }

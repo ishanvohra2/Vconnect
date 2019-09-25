@@ -7,46 +7,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_feed_main_layout"
     tools:context=".fragments.MainFeedFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/lightblue">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/lightblue">
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:elevation="1dp"
-                android:background="#ffff">
+                android:background="@android:color/white"
+                android:layout_margin="12dp"
+                app:cardCornerRadius="25dp">
 
-                <android.support.v7.widget.Toolbar
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
                     <TextView
                         android:id="@+id/toolbar_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="12dp"
-                        android:text="@string/app_name"
+                        android:text="Your Feed"
                         android:textColor="@android:color/black"
-                        android:textSize="22sp"/>
+                        android:textSize="25sp"
+                        android:layout_weight="1"/>
 
-                </android.support.v7.widget.Toolbar>
+                    <Button
+                        android:id="@+id/message_btn"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/direction"/>
 
-                <Button
-                    android:id="@+id/message_btn"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/paper_plane"/>
+                </LinearLayout>
 
-            </LinearLayout>
+            </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/main_feed_my_school_recycler_view"
@@ -66,6 +75,8 @@
                 />
 
         </LinearLayout>
+
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"

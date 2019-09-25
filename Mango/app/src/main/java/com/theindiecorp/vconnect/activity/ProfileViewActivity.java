@@ -35,6 +35,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class ProfileViewActivity extends AppCompatActivity {
 
@@ -63,7 +65,7 @@ public class ProfileViewActivity extends AppCompatActivity {
         final LinearLayout privateProfileBox = findViewById(R.id.watermark);
 
         final RecyclerView recyclerView = findViewById(R.id.profile_view_recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         linearLayoutManager.scrollToPosition(events.size() - 1);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -147,6 +149,7 @@ public class ProfileViewActivity extends AppCompatActivity {
                         events.add(event);
                     }
                 }
+                Collections.reverse(events);
                 adapter.setEvents(events);
                 adapter.notifyDataSetChanged();
                 postCount.setText(events.size() + "");

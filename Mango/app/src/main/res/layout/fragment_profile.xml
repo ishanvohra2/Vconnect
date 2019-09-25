@@ -13,7 +13,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@android:color/white">
+    android:background="@color/lightblue">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,151 +48,159 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="start">
-
-                <com.mikhaellopez.circularimageview.CircularImageView
-                    android:id="@+id/profile_photo"
-                    android:layout_width="84dp"
-                    android:layout_height="84dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="12dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_user_pic"
-                    app:civ_border_color="@color/colorPrimary" />
+                app:cardCornerRadius="25dp"
+                android:layout_margin="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="12dp">
+                    android:orientation="vertical">
+
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/profile_photo"
+                        android:layout_width="95dp"
+                        android:layout_height="95dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="12dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_user_pic"
+                        app:civ_border_color="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/profile_display_name_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="Name"
+                        android:textSize="16sp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="8dp"
+                        android:textAlignment="center"/>
+
+                    <TextView
+                        android:id="@+id/profile_description_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:maxLines="3"
+                        android:text="No description added"
+                        android:textSize="15sp"
+                        android:textColor="@android:color/black"
+                        android:textAlignment="center"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_margin="12dp">
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:orientation="horizontal"
+                            android:layout_margin="12dp">
 
-                            <TextView
-                                android:id="@+id/my_profile_post_count_tv"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="50"
-                                android:textSize="17sp"
-                                android:textStyle="bold"
-                                android:layout_gravity="center_horizontal"/>
+                                android:orientation="vertical"
+                                android:layout_weight="1">
 
-                            <TextView
+                                <TextView
+                                    android:id="@+id/my_profile_post_count_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="50"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold"
+                                    android:layout_gravity="center_horizontal"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Posts"
+                                    android:textSize="15sp"
+                                    android:layout_gravity="center_horizontal"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Posts"
-                                android:textSize="15sp"
-                                android:layout_gravity="center_horizontal"/>
+                                android:orientation="vertical"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/my_profile_following_count_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="50"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold"
+                                    android:layout_gravity="center_horizontal"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Following"
+                                    android:textSize="15sp"
+                                    android:layout_gravity="center_horizontal"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:id="@+id/my_profile_followers_count_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="50"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold"
+                                    android:layout_gravity="center_horizontal"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Followers"
+                                    android:textSize="15sp"
+                                    android:layout_gravity="center_horizontal"/>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="1">
-
-                            <TextView
-                                android:id="@+id/my_profile_following_count_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="50"
-                                android:textSize="17sp"
-                                android:textStyle="bold"
-                                android:layout_gravity="center_horizontal"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Following"
-                                android:textSize="15sp"
-                                android:layout_gravity="center_horizontal"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight="1">
-
-                            <TextView
-                                android:id="@+id/my_profile_followers_count_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="50"
-                                android:textSize="17sp"
-                                android:textStyle="bold"
-                                android:layout_gravity="center_horizontal"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Followers"
-                                android:textSize="15sp"
-                                android:layout_gravity="center_horizontal"/>
-
-                        </LinearLayout>
 
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/profile_edit_porfile_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/button_background_stroke"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:text="Edit Profile"
-                        android:textColor="@android:color/black"
-                        android:textSize="15sp" />
-
                 </LinearLayout>
 
-            </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-            <TextView
-                android:id="@+id/profile_display_name_tv"
+            <Button
+                android:id="@+id/profile_edit_porfile_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:text="Name"
-                android:textSize="15sp"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/button_background_stroke"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Edit Profile"
                 android:textColor="@android:color/black"
-                android:layout_marginTop="8dp"/>
-
-            <TextView
-                android:id="@+id/profile_description_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="8dp"
-                android:maxLines="3"
-                android:text="No description added"
-                android:textSize="15sp"
-                android:textColor="@android:color/black"/>
-
+                android:textSize="15sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -288,7 +296,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -353,6 +362,7 @@
                 android:layout_height="match_parent"
                 tools:listitem="@layout/feed_main_recycler_view_item"
                 android:scrollbars="vertical"/>
+
             <Button
                 android:id="@+id/profile_reset_btn"
                 android:layout_width="match_parent"

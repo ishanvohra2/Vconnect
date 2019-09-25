@@ -4,6 +4,15 @@ public class Notification {
     private String notificationType;
     private String notification;
     private String link;
+    private Boolean read;
+
+    public Boolean getRead() {
+        return read;
+    }
+
+    public void setRead(Boolean read) {
+        this.read = read;
+    }
 
     public Notification() {
     }

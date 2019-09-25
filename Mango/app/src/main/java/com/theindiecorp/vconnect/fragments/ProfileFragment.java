@@ -270,10 +270,11 @@ public class ProfileFragment extends Fragment {
 
                 if(followerIds.isEmpty()){
                     followersBox.setVisibility(View.GONE);
-                }else{
-                    followersBox.setVisibility(View.VISIBLE);
-
                 }
+//                else{
+//                    followersBox.setVisibility(View.VISIBLE);
+//
+//                }
             }
 
             @Override

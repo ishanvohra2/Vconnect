@@ -2,6 +2,15 @@ package com.theindiecorp.vconnect.data;
 
 public class Text {
     String content,date,time,sentBy;
+    Boolean read;
+
+    public Boolean getRead() {
+        return read;
+    }
+
+    public void setRead(Boolean read) {
+        this.read = read;
+    }
 
     public String getContent() {
         return content;
