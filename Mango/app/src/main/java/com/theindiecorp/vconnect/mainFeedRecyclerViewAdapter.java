@@ -455,10 +455,10 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
     private void bookmark(Boolean bookmarked, String id) {
         if (bookmarked != null && bookmarked) {
             databaseReference.child("bookmarks").child(HomeActivity.userId).child(id).removeValue();
-            Snackbar.make(layout, "Bookmark removed", Snackbar.LENGTH_SHORT).show();
+//            Snackbar.make(layout, "Bookmark removed", Snackbar.LENGTH_SHORT).show();
         } else {
             databaseReference.child("bookmarks").child(HomeActivity.userId).child(id).setValue(true);
-            Snackbar.make(layout, "Bookmark added", Snackbar.LENGTH_SHORT).show();
+//            Snackbar.make(layout, "Bookmark added", Snackbar.LENGTH_SHORT).show();
         }
     }
 

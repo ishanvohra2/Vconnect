@@ -16,11 +16,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.theindiecorp.vconnect.HighlightsAdapter;
 import com.theindiecorp.vconnect.R;
 import com.theindiecorp.vconnect.activity.InboxActivity;
 import com.theindiecorp.vconnect.activity.NewArticleActivity;
 import com.theindiecorp.vconnect.activity.NewEventActivity;
 import com.theindiecorp.vconnect.data.Event;
+import com.theindiecorp.vconnect.data.Highlight;
 import com.theindiecorp.vconnect.mainFeedRecyclerViewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -37,10 +39,10 @@ public class MainFeedFragment extends Fragment {
 
     String userId,userEmail;
     ArrayList<String> followingUserIds = new ArrayList<>();
+    ArrayList<Highlight> highlights = new ArrayList<>();
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
 
     private String mParam1;
     private String mParam2;
@@ -99,6 +101,11 @@ public class MainFeedFragment extends Fragment {
 
         final mainFeedRecyclerViewAdapter adapter = new mainFeedRecyclerViewAdapter(events, getContext(), layout);
         recyclerView.setAdapter(adapter);
+
+        RecyclerView highlightsRecycler = view.findViewById(R.id.main_feed_highlights_recycler_view);
+        highlightsRecycler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        HighlightsAdapter highlightsAdapter = new HighlightsAdapter(getContext(),new ArrayList<Highlight>());
+        highlightsRecycler.setAdapter(highlightsAdapter);
 
         databaseReference.child("users").child(userId).child("followers").addValueEventListener(new ValueEventListener() {
             @Override
@@ -185,8 +192,21 @@ public class MainFeedFragment extends Fragment {
             }
         });
 
+        Highlight highlight = new Highlight();
+        Highlight highlight1 = new Highlight();
+        highlight.setTitle("New Notification");
+        highlight.setContent("26");
+
+        highlights.add(highlight);
+
+        highlight1.setTitle("Vconnect!");
+        highlight1.setContent("50 Likes");
+        highlight1.setUrl("events/-LoEKnNOwcOWqxEg6XnG/images/image.jpeg");
+
+        highlights.add(highlight1);
+
+        highlightsAdapter.setHighlights(highlights);
+
         return view;
     }
-
-
 }
