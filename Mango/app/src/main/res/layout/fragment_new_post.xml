@@ -4,157 +4,180 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/lightblue">
 
-    <android.support.design.widget.AppBarLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:cardCornerRadius="25dp">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="What's up?"
-            app:titleTextColor="@android:color/black"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-    </android.support.design.widget.AppBarLayout>
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Create Post"
+                android:textColor="@android:color/black"
+                android:textSize="25sp"
+                android:visibility="visible"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/share_article_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Article"
+                    android:background="@drawable/button_background_stroke"
+                    android:layout_margin="5dp"
+                    android:textColor = "@color/colorPrimary"/>
+
+                <Button
+                    android:id="@+id/share_event_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="EVENT"
+                    android:background="@drawable/button_background_stroke"
+                    android:layout_margin="5dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="25dp"
+            android:layout_margin="8dp">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                tools:context=".activity.NewEventActivity">
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                    <Button
-                        android:id="@+id/share_article_btn"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Article"
-                        android:background="@drawable/button_background_stroke"
-                        android:layout_margin="5dp"
-                        android:textColor = "@color/colorPrimary"/>
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Your thoughts here..."
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
 
-                    <Button
-                        android:id="@+id/share_event_btn"
+                    <EditText
+                        android:id="@+id/article_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="EVENT"
-                        android:background="@drawable/button_background_stroke"
-                        android:layout_margin="5dp"/>
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="12dp"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Your thoughts here..."
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/article_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/rounded_box"
-                    android:padding="12dp"
-                    android:minLines="5"
-                    android:maxLines="10"
-                    android:gravity="top"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="12dp"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Add an image(Optional)"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/new_article_main_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="220dp"
-                        android:layout_margin="12dp"
+                        android:layout_margin="8dp"
                         android:background="@drawable/rounded_box"
-                        android:scaleType="centerCrop"
-                        android:transitionName="main_item_main_image" />
+                        android:padding="12dp"
+                        android:minLines="3"
+                        android:maxLines="5"
+                        android:gravity="top"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Add an image(Optional)"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/new_article_main_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp"
+                            android:layout_margin="8dp"
+                            android:background="@drawable/rounded_box"
+                            android:scaleType="centerCrop"
+                            android:transitionName="main_item_main_image" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="24dp"
+                            android:gravity="center"
+                            android:text="Please add\nan image for your event"
+                            android:textAlignment="center"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/uploadImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|center"
+                            android:layout_marginBottom="24dp"
+                            android:backgroundTint="@color/colorAccent"
+                            android:paddingStart="36dp"
+                            android:paddingEnd="36dp"
+                            android:text="Upload"
+                            android:textColor="@android:color/white" />
+                    </FrameLayout>
 
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="24dp"
-                        android:gravity="center"
-                        android:text="Please add\nan image for your event"
-                        android:textAlignment="center"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Add a location (Optional)"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
 
-                    <Button
-                        android:id="@+id/uploadImage"
-                        android:layout_width="wrap_content"
+                    <Spinner
+                        android:id="@+id/new_article_location_tv"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|center"
-                        android:layout_marginBottom="24dp"
-                        android:backgroundTint="@color/colorAccent"
-                        android:paddingStart="36dp"
-                        android:paddingEnd="36dp"
-                        android:text="Upload"
-                        android:textColor="@android:color/white" />
-                </FrameLayout>
+                        android:visibility="gone"/>
 
+                </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="12dp"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Add a location (Optional)"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"
-                    android:visibility="gone"/>
+            </ScrollView>
 
-                <Spinner
-                    android:id="@+id/new_article_location_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"/>
-
-            </LinearLayout>
-
-        </ScrollView>
+        </android.support.v7.widget.CardView>
 
         <Button
             android:id="@+id/shareBtn"

@@ -6,29 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.theindiecorp.vconnect.activity.InboxActivity"
-    android:orientation="vertical">
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="Inbox"
-            app:titleTextColor="@android:color/black"/>
-
-    </android.support.design.widget.AppBarLayout>
+    android:orientation="vertical"
+    android:background="@color/lightblue">
 
     <LinearLayout
         android:id="@+id/online_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="match_parent"
@@ -48,19 +34,57 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.SearchView
-        android:id="@+id/main_feed_search_view"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/rounded_box"
-        android:clickable="true"
-        android:focusable="true" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:cardCornerRadius="25dp">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Inbox"
+                android:textColor="@android:color/black"
+                android:textSize="25sp"
+                android:visibility="visible"/>
+
+            <android.support.v7.widget.SearchView
+                android:id="@+id/main_feed_search_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_background_stroke"
+                android:clickable="true"
+                android:focusable="true" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/inbox_item"/>
+        app:cardCornerRadius="25dp"
+        android:layout_margin="8dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/inbox_item"/>
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
