@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.theindiecorp.vconnect.activity.HomeActivity;
 import com.theindiecorp.vconnect.data.Text;
 
 import java.util.ArrayList;

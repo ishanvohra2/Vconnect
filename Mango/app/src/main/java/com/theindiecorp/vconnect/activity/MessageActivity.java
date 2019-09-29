@@ -70,7 +70,7 @@ public class MessageActivity extends AppCompatActivity {
                         if(dataSnapshot.exists()){
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                                 Text t = snapshot.getValue(Text.class);
-                                t.setRead(true);
+                                databaseReference.child("messages").child(HomeActivity.userId).child(receiverId).child(snapshot.getKey()).child("read").setValue(true);
                                 texts.add(t);
                             }
                         }

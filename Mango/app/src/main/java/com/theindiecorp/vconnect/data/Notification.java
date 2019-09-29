@@ -3,8 +3,16 @@ package com.theindiecorp.vconnect.data;
 public class Notification {
     private String notificationType;
     private String notification;
-    private String link;
+    private String link,id;
     private Boolean read;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Boolean getRead() {
         return read;

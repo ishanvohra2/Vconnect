@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.theindiecorp.vconnect.NotificationsAdapter;
 import com.theindiecorp.vconnect.R;
+import com.theindiecorp.vconnect.activity.HomeActivity;
 import com.theindiecorp.vconnect.data.Notification;
 
 import java.util.ArrayList;
@@ -73,7 +74,8 @@ public class NotificationsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Notification notification = snapshot.getValue(Notification.class);
-                    notification.setRead(true);
+                    notification.setId(snapshot.getKey());
+                    databaseReference.child("users").child(userId).child("notifications").child(notification.getId()).child("read").setValue(true);
                     notificationsList.add(notification);
                 }
 
@@ -92,6 +94,5 @@ public class NotificationsFragment extends Fragment {
 
         return view;
     }
-
 
 }

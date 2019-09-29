@@ -74,14 +74,14 @@ public class HighlightsAdapter extends RecyclerView.Adapter<HighlightsAdapter.My
         holder.title.setText(highlight.getTitle());
         holder.content.setText(highlight.getContent());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(highlight.getType().equals("Message") && highlight.getType() != null){
-                    context.startActivity(new Intent(context, InboxActivity.class));
-                }
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(highlight.getType().equals("Message") && highlight.getType() != null){
+//                    context.startActivity(new Intent(context, InboxActivity.class));
+//                }
+//            }
+//        });
 
         if(highlight.getUrl()!=null){
             final BlurTransformation bitmapTransform = new BlurTransformation();

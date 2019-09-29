@@ -33,7 +33,7 @@
                 android:text="Name"
                 android:paddingStart="12dp"
                 android:textSize="17sp"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:id="@+id/last_message"

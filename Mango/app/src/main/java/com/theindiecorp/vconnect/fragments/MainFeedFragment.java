@@ -194,13 +194,13 @@ public class MainFeedFragment extends Fragment {
 
         Highlight highlight = new Highlight();
         Highlight highlight1 = new Highlight();
-        highlight.setTitle("New Notification");
-        highlight.setContent("26");
+        highlight.setTitle("Create new group");
+        highlight.setContent("");
 
         highlights.add(highlight);
 
-        highlight1.setTitle("Vconnect!");
-        highlight1.setContent("50 Likes");
+        highlight1.setTitle("Group 1");
+        highlight1.setContent("50 new posts");
         highlight1.setUrl("events/-LoEKnNOwcOWqxEg6XnG/images/image.jpeg");
 
         highlights.add(highlight1);

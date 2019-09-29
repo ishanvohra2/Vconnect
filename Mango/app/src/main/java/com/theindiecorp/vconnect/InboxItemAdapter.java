@@ -25,6 +25,7 @@ import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.theindiecorp.vconnect.activity.HomeActivity;
 import com.theindiecorp.vconnect.activity.MessageActivity;
+import com.theindiecorp.vconnect.data.Text;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,7 @@ public class InboxItemAdapter extends RecyclerView.Adapter<InboxItemAdapter.MyVi
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private ArrayList<String> dataSet;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private ArrayList<String> textIds = new ArrayList<>();
 
     public int setMessageId(ArrayList<String> dataSet){
         this.dataSet = dataSet;
@@ -92,7 +94,7 @@ public class InboxItemAdapter extends RecyclerView.Adapter<InboxItemAdapter.MyVi
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists()){
-                            ArrayList<String> textIds = new ArrayList<>();
+                            textIds = new ArrayList<>();
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                                 textIds.add(snapshot.getKey());
                             }
@@ -129,6 +131,30 @@ public class InboxItemAdapter extends RecyclerView.Adapter<InboxItemAdapter.MyVi
                     .putExtra("userid",receiverId));
             }
         });
+
+        final int[] i = {textIds.size() - 1};
+
+//        while (i[0] == 0){
+//            final Text[] t = {new Text()};
+//            databaseReference.child("messages").child(HomeActivity.userId).child(receiverId).child(textIds.get(i[0])).addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    t[0] = dataSnapshot.getValue(Text.class);
+//                    if(!t[0].getSentBy().equals(HomeActivity.userId) && t[0].getRead()==null){
+//                        holder.lastMessage.setTextColor(android.R.color.black);
+//                        i[0] = 0;
+//                    }
+//                    else{
+//                        i[0]--;
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }
+//            });
+//        }
     }
 
     @Override

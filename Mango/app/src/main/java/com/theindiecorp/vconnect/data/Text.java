@@ -1,7 +1,7 @@
 package com.theindiecorp.vconnect.data;
 
 public class Text {
-    String content,date,time,sentBy;
+    String content,date,time,sentBy,url;
     Boolean read;
 
     public Boolean getRead() {
@@ -10,6 +10,14 @@ public class Text {
 
     public void setRead(Boolean read) {
         this.read = read;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getContent() {
