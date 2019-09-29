@@ -9,15 +9,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <EditText
+        <android.support.v7.widget.SearchView
+            android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_background_stroke"
             android:layout_margin="12dp"
-            android:minLines="2"
-            android:hint="Write a message"
+            android:hint="Search"
             android:padding="8dp"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black"
+            android:clickable="true"
+            android:focusable="true"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/send_post_recycler"

@@ -6,9 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.theindiecorp.vconnect.activity.HomeActivity;
 import com.theindiecorp.vconnect.data.Text;
 
@@ -25,12 +28,21 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView date,textContent;
+        private TextView date,textContent, postTitle, postContent;
+        private LinearLayout textBox, postBox;
+        private ImageView postImage;
+        private CircularImageView profileImg;
 
         public MyViewHolder(View view){
             super(view);
             this.date = view.findViewById(R.id.date);
             this.textContent = view.findViewById(R.id.text);
+            this.textBox = view.findViewById(R.id.text_box);
+            this.postBox = view.findViewById(R.id.post_box);
+            this.postTitle = view.findViewById(R.id.main_item_title);
+            this.postContent = view.findViewById(R.id.main_item_description);
+            this.postImage = view.findViewById(R.id.main_item_main_image);
+            this.profileImg = view.findViewById(R.id.main_item_profile_pic);
         }
     }
 
@@ -65,6 +77,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             holder.textContent.setBackground(context.getDrawable(R.drawable.received_box));
             holder.textContent.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
             holder.date.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+        }
+
+        if(text.getPost() != null){
+            holder.textBox.setVisibility(View.GONE);
+            holder.postBox.setVisibility(View.VISIBLE);
+        }
+        else{
+            holder.postBox.setVisibility(View.VISIBLE);
+            holder.textBox.setVisibility(View.GONE);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -1,8 +1,16 @@
 package com.theindiecorp.vconnect.data;
 
 public class Text {
-    String content,date,time,sentBy,url;
-    Boolean read;
+    String content,date,time,sentBy,postId;
+    Boolean read, isPost;
+
+    public Boolean getPost() {
+        return isPost;
+    }
+
+    public void setPost(Boolean post) {
+        isPost = post;
+    }
 
     public Boolean getRead() {
         return read;
@@ -12,12 +20,12 @@ public class Text {
         this.read = read;
     }
 
-    public String getUrl() {
-        return url;
+    public String getPostId() {
+        return postId;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setPostId(String postId) {
+        this.postId = postId;
     }
 
     public String getContent() {

@@ -30,6 +30,7 @@ import com.theindiecorp.vconnect.activity.CommentActivity;
 import com.theindiecorp.vconnect.activity.EventViewActivity;
 import com.theindiecorp.vconnect.activity.HomeActivity;
 import com.theindiecorp.vconnect.activity.ProfileViewActivity;
+import com.theindiecorp.vconnect.activity.SendPostActivity;
 import com.theindiecorp.vconnect.data.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -75,7 +76,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title, place, description, date, eventName, peopleCount, likeCount;
-        private ImageView profileImg, mainImg, bookmarkBtn, menuImg,likeBtn,commentBtn;
+        private ImageView profileImg, mainImg, bookmarkBtn, menuImg,likeBtn,commentBtn, sendPostBtn;
         LinearLayout profileBar;
         Boolean bookmarked,liked;
         private Button deleteBtn;
@@ -98,6 +99,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
             this.likeCount = itemView.findViewById(R.id.main_post_likes);
             this.commentBtn = itemView.findViewById(R.id.main_item_comment_btn);
             this.deleteBtn = itemView.findViewById(R.id.delete_post_btn);
+            this.sendPostBtn = itemView.findViewById(R.id.main_item_send_btn);
         }
     }
 
@@ -429,6 +431,14 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
                 else
                     databaseReference.child("events").child(event.getId()).child("isPrivate").removeValue();
                 dataSet.remove(listPosition);
+            }
+        });
+
+        holder.sendPostBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, SendPostActivity.class)
+                    .putExtra("postId",event.getId()));
             }
         });
     }
