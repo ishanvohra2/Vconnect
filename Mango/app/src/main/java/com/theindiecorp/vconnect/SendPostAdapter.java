@@ -138,6 +138,11 @@ public class SendPostAdapter extends RecyclerView.Adapter<SendPostAdapter.MyView
                         .child(userId).child(id).setValue(t);
                 databaseReference.child("messages").child(userId)
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(id).setValue(t);
+
+                holder.sendPostBtn.setText("Sent");
+                holder.sendPostBtn.setEnabled(false);
+                holder.sendPostBtn.setTextColor(android.R.color.black);
+                holder.sendPostBtn.setBackground(context.getDrawable(R.drawable.button_background_stroke));
             }
         });
 
