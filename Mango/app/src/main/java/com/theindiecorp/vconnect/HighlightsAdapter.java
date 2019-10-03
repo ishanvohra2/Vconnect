@@ -1,11 +1,8 @@
 package com.theindiecorp.vconnect;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,26 +14,27 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.theindiecorp.vconnect.activity.HomeActivity;
-import com.theindiecorp.vconnect.activity.InboxActivity;
-import com.theindiecorp.vconnect.data.Highlight;
+import com.theindiecorp.vconnect.data.Group;
 
 import java.util.ArrayList;
 
-import jp.wasabeef.glide.transformations.BitmapTransformation;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class HighlightsAdapter extends RecyclerView.Adapter<HighlightsAdapter.MyViewHolder> {
     private Context context;
-    private ArrayList<Highlight> dataSet;
+    private ArrayList<Group> dataSet;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseStorage storage = FirebaseStorage.getInstance();
 
-    public int setHighlights(ArrayList<Highlight> dataSet){
+    public int setHighlights(ArrayList<Group> dataSet){
         this.dataSet = dataSet;
         return dataSet.size();
     }
@@ -53,7 +51,7 @@ public class HighlightsAdapter extends RecyclerView.Adapter<HighlightsAdapter.My
         }
     }
 
-    public HighlightsAdapter(Context context, ArrayList<Highlight> dataSet){
+    public HighlightsAdapter(Context context, ArrayList<Group> dataSet){
         this.context = context;
         this.dataSet = dataSet;
     }
@@ -69,37 +67,50 @@ public class HighlightsAdapter extends RecyclerView.Adapter<HighlightsAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int listPosition) {
-        final Highlight highlight = dataSet.get(listPosition);
+        final Group group = dataSet.get(listPosition);
 
-        holder.title.setText(highlight.getTitle());
-        holder.content.setText(highlight.getContent());
+        holder.title.setText(group.getName());
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(highlight.getType().equals("Message") && highlight.getType() != null){
-//                    context.startActivity(new Intent(context, InboxActivity.class));
-//                }
-//            }
-//        });
-
-        if(highlight.getUrl()!=null){
-            final BlurTransformation bitmapTransform = new BlurTransformation();
-            StorageReference imageReference = storage.getReference().child(highlight.getUrl());
-            imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        if(group.getName() != "Add New Group"){
+            databaseReference.child("groups").child(group.getId()).child("members").addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onSuccess(Uri uri) {
-                    Glide.with(context.getApplicationContext())
-                            .load(uri)
-                            .transform(new BlurTransformation(9))
-                            .into(holder.imageView);
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        ArrayList<String> members = new ArrayList<>();
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            members.add(snapshot.getKey());
+                        }
+                        holder.content.setText(members.size() + "Members");
+                    }
                 }
-            }).addOnFailureListener(new OnFailureListener() {
+
                 @Override
-                public void onFailure(@NonNull Exception exception) {
-                    Log.d(HomeActivity.TAG, exception.getMessage());
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                 }
             });
+
+            if(group.getUrl()!=null){
+                final BlurTransformation bitmapTransform = new BlurTransformation();
+                StorageReference imageReference = storage.getReference().child(group.getUrl());
+                imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide.with(context.getApplicationContext())
+                                .load(uri)
+                                .transform(new BlurTransformation(9))
+                                .into(holder.imageView);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Log.d(HomeActivity.TAG, exception.getMessage());
+                    }
+                });
+            }
+        }
+        else{
+            holder.content.setVisibility(View.GONE);
         }
     }
 

@@ -18,10 +18,12 @@ import android.widget.LinearLayout;
 
 import com.theindiecorp.vconnect.HighlightsAdapter;
 import com.theindiecorp.vconnect.R;
+import com.theindiecorp.vconnect.activity.HomeActivity;
 import com.theindiecorp.vconnect.activity.InboxActivity;
 import com.theindiecorp.vconnect.activity.NewArticleActivity;
 import com.theindiecorp.vconnect.activity.NewEventActivity;
 import com.theindiecorp.vconnect.data.Event;
+import com.theindiecorp.vconnect.data.Group;
 import com.theindiecorp.vconnect.data.Highlight;
 import com.theindiecorp.vconnect.mainFeedRecyclerViewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,7 +41,7 @@ public class MainFeedFragment extends Fragment {
 
     String userId,userEmail;
     ArrayList<String> followingUserIds = new ArrayList<>();
-    ArrayList<Highlight> highlights = new ArrayList<>();
+    ArrayList<Group> groups = new ArrayList<>();
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -104,7 +106,7 @@ public class MainFeedFragment extends Fragment {
 
         RecyclerView highlightsRecycler = view.findViewById(R.id.main_feed_highlights_recycler_view);
         highlightsRecycler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-        HighlightsAdapter highlightsAdapter = new HighlightsAdapter(getContext(),new ArrayList<Highlight>());
+        HighlightsAdapter highlightsAdapter = new HighlightsAdapter(getContext(),new ArrayList<Group>());
         highlightsRecycler.setAdapter(highlightsAdapter);
 
         databaseReference.child("users").child(userId).child("followers").addValueEventListener(new ValueEventListener() {
@@ -192,20 +194,41 @@ public class MainFeedFragment extends Fragment {
             }
         });
 
-        Highlight highlight = new Highlight();
-        Highlight highlight1 = new Highlight();
-        highlight.setTitle("Create new group");
-        highlight.setContent("");
+        databaseReference.child("groups").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                groups = new ArrayList<>();
+                Group group = new Group();
+                group.setName("Add New Group");
+                groups.add(group);
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    group = snapshot.getValue(Group.class);
+                    group.setId(snapshot.getKey());
+                    final Group finalGroup = group;
+                    databaseReference.child("groups").child(group.getId()).child("members").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists()){
+                                for(DataSnapshot snapshot1 : dataSnapshot.getChildren()){
+                                    if(snapshot1.getKey().equals(HomeActivity.userId))
+                                        groups.add(finalGroup);
+                                }
+                            }
+                        }
 
-        highlights.add(highlight);
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        highlight1.setTitle("Group 1");
-        highlight1.setContent("50 new posts");
-        highlight1.setUrl("events/-LoEKnNOwcOWqxEg6XnG/images/image.jpeg");
+                        }
+                    });
+                }
+            }
 
-        highlights.add(highlight1);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        highlightsAdapter.setHighlights(highlights);
+            }
+        });
 
         return view;
     }

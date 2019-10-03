@@ -90,11 +90,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             holder.textContent.setBackground(context.getDrawable(R.drawable.sent_box));
             holder.textContent.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
             holder.date.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+            holder.postBox.setBackground(context.getDrawable(R.drawable.sent_box));
         }
         else{
             holder.textContent.setBackground(context.getDrawable(R.drawable.received_box));
             holder.textContent.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
             holder.date.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+            holder.postBox.setBackground(context.getDrawable(R.drawable.received_box));
         }
 
         if(text.getPost() != null){
