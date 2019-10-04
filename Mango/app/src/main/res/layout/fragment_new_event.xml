@@ -320,5 +320,7 @@
             android:minHeight="52dp"
             android:text="Create"
             android:textColor="@android:color/white" />
+
     </FrameLayout>
+
 </LinearLayout>

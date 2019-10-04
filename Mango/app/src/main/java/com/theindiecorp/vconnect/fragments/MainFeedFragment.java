@@ -15,9 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.theindiecorp.vconnect.HighlightsAdapter;
 import com.theindiecorp.vconnect.R;
+import com.theindiecorp.vconnect.activity.AddGroupActivity;
 import com.theindiecorp.vconnect.activity.HomeActivity;
 import com.theindiecorp.vconnect.activity.InboxActivity;
 import com.theindiecorp.vconnect.activity.NewArticleActivity;
@@ -78,6 +80,8 @@ public class MainFeedFragment extends Fragment {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_main_feed, container, false);
+        TextView newGroupBtn = view.findViewById(R.id.new_group);
+
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
         userId  = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -106,7 +110,7 @@ public class MainFeedFragment extends Fragment {
 
         RecyclerView highlightsRecycler = view.findViewById(R.id.main_feed_highlights_recycler_view);
         highlightsRecycler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-        HighlightsAdapter highlightsAdapter = new HighlightsAdapter(getContext(),new ArrayList<Group>());
+        final HighlightsAdapter highlightsAdapter = new HighlightsAdapter(getContext(),new ArrayList<Group>());
         highlightsRecycler.setAdapter(highlightsAdapter);
 
         databaseReference.child("users").child(userId).child("followers").addValueEventListener(new ValueEventListener() {
@@ -198,35 +202,28 @@ public class MainFeedFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 groups = new ArrayList<>();
-                Group group = new Group();
-                group.setName("Add New Group");
-                groups.add(group);
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Group group = new Group();
                     group = snapshot.getValue(Group.class);
                     group.setId(snapshot.getKey());
-                    final Group finalGroup = group;
-                    databaseReference.child("groups").child(group.getId()).child("members").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.exists()){
-                                for(DataSnapshot snapshot1 : dataSnapshot.getChildren()){
-                                    if(snapshot1.getKey().equals(HomeActivity.userId))
-                                        groups.add(finalGroup);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
+                    if(group.getMembers().contains(HomeActivity.userId)){
+                        groups.add(group);
+                    }
                 }
+                highlightsAdapter.setHighlights(groups);
+                highlightsAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        newGroupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AddGroupActivity.class));
             }
         });
 

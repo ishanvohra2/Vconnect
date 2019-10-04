@@ -14,6 +14,10 @@
         <activity android:name="com.theindiecorp.vconnect.activity.InboxActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+
+        <activity android:name="com.theindiecorp.vconnect.activity.AddGroupActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity android:name="com.theindiecorp.vconnect.activity.SendPostActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 

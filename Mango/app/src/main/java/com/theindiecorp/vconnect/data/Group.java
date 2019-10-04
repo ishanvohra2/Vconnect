@@ -1,11 +1,31 @@
 package com.theindiecorp.vconnect.data;
 
+import java.util.ArrayList;
+
 public class Group {
     private String name;
     private String url;
     private String groupDescription;
     private String adminId;
     private String id;
+    private ArrayList<String> members;
+    private int maximumNumberOfMembers;
+
+    public int getMaximumNumberOfMembers() {
+        return maximumNumberOfMembers;
+    }
+
+    public void setMaximumNumberOfMembers(int maximumNumberOfMembers) {
+        this.maximumNumberOfMembers = maximumNumberOfMembers;
+    }
+
+    public ArrayList<String> getMembers() {
+        return members;
+    }
+
+    public void setMembers(ArrayList<String> members) {
+        this.members = members;
+    }
 
     public String getId() {
         return id;
