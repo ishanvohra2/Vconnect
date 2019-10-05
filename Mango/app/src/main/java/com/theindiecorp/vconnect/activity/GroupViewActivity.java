@@ -1,16 +1,15 @@
 package com.theindiecorp.vconnect.activity;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
 import com.theindiecorp.vconnect.R;
 
 public class GroupViewActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.group_view_activity);
+        setContentView(R.layout.activity_group_view);
     }
 }
