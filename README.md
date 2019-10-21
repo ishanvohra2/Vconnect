@@ -25,6 +25,9 @@ Follow these instructions to build and run the project with mock data..
 6. [Create a Firebase Project](https://firebase.google.com/docs/android/setup) and link that to your Android Studio Project.
 7. Run the app. Click Run > Run 'app'. After the project builds you'll be prompted to build or launch an emulator.
 
+## Documentation
+While we're at it, why not share our docs? Check out the [native docs](https://github.com/ishanvohra2/Vconnect/blob/master/Documentation.md) we have written so far for more documentation.
+
 ## Contributing
 We intend for this project to be an educational resource: we are excited to share our wins, mistakes, and methodology of Android development as we work in the open. Our primary focus is to continue improving the app for our users in line with our roadmap.
 

@@ -43,7 +43,7 @@ public class MainFeedFragment extends Fragment {
 
     String userId,userEmail;
     ArrayList<String> followingUserIds = new ArrayList<>();
-    ArrayList<Group> groups = new ArrayList<>();
+    public static ArrayList<Group> groups = new ArrayList<>();
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
