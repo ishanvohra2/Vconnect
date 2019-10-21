@@ -203,8 +203,7 @@ public class MainFeedFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 groups = new ArrayList<>();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Group group = new Group();
-                    group = snapshot.getValue(Group.class);
+                    Group group = snapshot.getValue(Group.class);
                     group.setId(snapshot.getKey());
                     if(group.getMembers().contains(HomeActivity.userId)){
                         groups.add(group);
