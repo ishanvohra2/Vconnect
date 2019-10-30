@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.mikhaellopez.circularimageview.CircularImageView;
 import com.theindiecorp.vconnect.R;
 
 public class GroupViewActivity extends AppCompatActivity {
@@ -16,7 +15,7 @@ public class GroupViewActivity extends AppCompatActivity {
     private String groupId;
 
     TextView groupNametV, groupDescriptionTv, membersTv, postsTv;
-    Button joinBtn;
+    Button editInfoBtn, joinGroupBtn, createPostBtn;
     ImageView profileImage;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -32,8 +31,12 @@ public class GroupViewActivity extends AppCompatActivity {
         groupDescriptionTv = findViewById(R.id.profile_description_tv);
         membersTv = findViewById(R.id.profile_view_followers_tv);
         postsTv = findViewById(R.id.profile_view_posts_count_tv);
-        joinBtn = findViewById(R.id.profile_view_follow_btn);
+        editInfoBtn = findViewById(R.id.edit_info_btn);
         profileImage = findViewById(R.id.profile_photo);
+        joinGroupBtn = findViewById(R.id.join_group_btn);
+        createPostBtn = findViewById(R.id.post_btn);
+
+        databaseReference.child("")
 
     }
 }

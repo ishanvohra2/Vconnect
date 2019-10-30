@@ -35,7 +35,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class ProfileViewActivity extends AppCompatActivity {
@@ -58,7 +57,7 @@ public class ProfileViewActivity extends AppCompatActivity {
         description = findViewById(R.id.profile_description_tv);
         followers = findViewById(R.id.profile_view_followers_tv);
         postCount = findViewById(R.id.profile_view_posts_count_tv);
-        final Button followBtn = findViewById(R.id.profile_view_follow_btn);
+        final Button followBtn = findViewById(R.id.edit_info_btn);
         final Button messageBtn = findViewById(R.id.profile_view_message_btn);
         profile_pic = findViewById(R.id.profile_photo);
 

@@ -181,7 +181,7 @@
                             android:layout_gravity="center">
 
                             <Button
-                                android:id="@+id/profile_view_follow_btn"
+                                android:id="@+id/edit_info_btn"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
