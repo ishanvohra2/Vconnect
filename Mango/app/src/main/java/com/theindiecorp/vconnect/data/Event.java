@@ -9,15 +9,26 @@ public class Event {
 
     public static final int FEED_HEADER = 0;
     public static final int FEED_MAIN_ITEM= 1;
-
-
-    //others
-    //private ArrayList<Comment> comments;
     private String imgUrl;
     private String id,venueId;
     private String hostName;
     private int likeCount,points;
     private Boolean isPrivate;
+    private String publishDate;
+    private String type;
+    private Location location;
+    private String date;
+    private int peopleCount, totalSpots;
+    private ArrayList<String> userIds;
+    private String groupId;
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
 
     public int getPoints() {
         return points;
@@ -51,8 +62,6 @@ public class Event {
         this.publishDate = publishDate;
     }
 
-    private String publishDate;
-
     public String getType() {
         return type;
     }
@@ -60,9 +69,6 @@ public class Event {
     public void setType(String type) {
         this.type = type;
     }
-
-    private String type;
-    private Location location;
 
     public ArrayList<String> getUserIds() {
         return userIds;
@@ -72,8 +78,6 @@ public class Event {
         this.userIds = userIds;
     }
 
-    ArrayList<String> userIds;
-
     public String getDate() {
         return date;
     }
@@ -82,14 +86,10 @@ public class Event {
         this.date = date;
     }
 
-    String date;
-    int peopleCount, totalSpots;
-
     public Event() {
         likeCount =0;
         userIds = new ArrayList<>();
     }
-
 
     public String getId() {
         return id;
@@ -116,14 +116,12 @@ public class Event {
     }
 
     public String getEventName() {
-
         return eventName;
     }
 
     public void setEventName(String eventName) {
         this.eventName = eventName;
     }
-
 
     public String getImgUrl() {
         return imgUrl;
@@ -132,17 +130,6 @@ public class Event {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
-
-
-/*    public ArrayList<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(ArrayList<Comment> comments) {
-        this.comments = comments;
-    }*/
-
-
 
     public Location getLocation() {
         return location;

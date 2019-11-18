@@ -32,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     public static String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     public static int points;
     public static String userEmail;
+    public static String groupId = "";
     String eventIdFromIntent = "";
 
 
@@ -113,6 +114,8 @@ public class HomeActivity extends AppCompatActivity {
         loadFragment(new MainFeedFragment());
 
         // ended here
+
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("users").child(HomeActivity.userId).child("isOnline").setValue(true);

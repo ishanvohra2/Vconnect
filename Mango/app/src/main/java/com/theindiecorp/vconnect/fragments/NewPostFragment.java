@@ -9,6 +9,9 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,16 +25,19 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.theindiecorp.vconnect.GroupSearchItemRecycler;
 import com.theindiecorp.vconnect.R;
 import com.theindiecorp.vconnect.activity.HomeActivity;
 import com.theindiecorp.vconnect.data.Event;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.theindiecorp.vconnect.data.Group;
 
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
@@ -52,6 +58,10 @@ public class NewPostFragment extends Fragment {
     ImageView image;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     EditText articleText;
+    SearchView searchView;
+    RecyclerView recyclerView;
+
+    GroupSearchItemRecycler groupAdapter;
 
     public NewPostFragment() {
         // Required empty public constructor
@@ -67,6 +77,12 @@ public class NewPostFragment extends Fragment {
 
         articleText = v.findViewById(R.id.article_text);
         image = v.findViewById(R.id.new_article_main_image);
+        searchView = v.findViewById(R.id.article_tag);
+        recyclerView = v.findViewById(R.id.group_recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        groupAdapter = new GroupSearchItemRecycler(getContext(),new ArrayList<String>());
+        recyclerView.setAdapter(groupAdapter);
 
         Button moveToEventBtn = v.findViewById(R.id.share_event_btn);
         moveToEventBtn.setOnClickListener(new View.OnClickListener() {
@@ -109,9 +125,50 @@ public class NewPostFragment extends Fragment {
             }
         });
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String queryText) {
+                Query query = FirebaseDatabase.getInstance().getReference("groups")
+                        .orderByChild("name").startAt(queryText).endAt(queryText + "\uf8ff");
+                query.addValueEventListener(groupListener);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Query query = FirebaseDatabase.getInstance().getReference("groups")
+                        .orderByChild("name").startAt(newText).endAt(newText + "\uf8ff");
+                query.addValueEventListener(groupListener);
+
+                return false;
+            }
+        });
+
         return v;
 
     }
+
+    ValueEventListener groupListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            ArrayList<String> groupIds = new ArrayList<>();
+            if(dataSnapshot.exists()){
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Group group = snapshot.getValue(Group.class);
+                    if(group.getAdminId().equals(HomeActivity.userId))
+                        groupIds.add(group.getId());
+                }
+                groupAdapter.setGroupIds(groupIds);
+                groupAdapter.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
@@ -175,6 +232,7 @@ public class NewPostFragment extends Fragment {
             event.setHostId(userId);
             event.setEventName("");
             event.setDescription(articleTxt);
+            event.setGroupId(HomeActivity.groupId);
             event.setPoints(5);
 
             databaseReference.child("events").child(id).setValue(event);

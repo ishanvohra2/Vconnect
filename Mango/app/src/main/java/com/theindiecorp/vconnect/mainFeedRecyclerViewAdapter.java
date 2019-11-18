@@ -75,7 +75,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView title, place, description, date, eventName, peopleCount, likeCount;
+        private TextView title, subTitle, description, date, eventName, peopleCount, likeCount;
         private ImageView profileImg, mainImg, bookmarkBtn, menuImg,likeBtn,commentBtn, sendPostBtn;
         LinearLayout profileBar;
         Boolean bookmarked,liked;
@@ -85,7 +85,7 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
         public MyViewHolder(View itemView) {
             super(itemView);
             this.title = itemView.findViewById(R.id.main_item_title);
-            this.place = itemView.findViewById(R.id.main_item_sub_title);
+            this.subTitle = itemView.findViewById(R.id.sub_title);
             this.description = itemView.findViewById(R.id.main_item_description);
             this.profileImg = itemView.findViewById(R.id.main_item_profile_pic);
             this.mainImg = itemView.findViewById(R.id.main_item_main_image);
@@ -172,6 +172,24 @@ public class mainFeedRecyclerViewAdapter extends RecyclerView.Adapter<mainFeedRe
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int listPosition) {
         final Event event = dataSet.get(listPosition);
+
+        if(event.getGroupId()!=null){
+            databaseReference.child("groups").child(event.getGroupId()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        holder.subTitle.setText( event.getType() + " shared on " + dataSnapshot.child("name").getValue(String.class));
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+        else
+            holder.subTitle.setVisibility(View.GONE);
 
         final int[] likeCounter = {0};
 
