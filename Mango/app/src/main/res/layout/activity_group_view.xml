@@ -30,9 +30,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_gravity="center"
-                    android:layout_margin="12dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_user_pic" />
+                    android:layout_marginBottom="12dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/network" />
 
                 <TextView
                     android:id="@+id/profile_display_name_tv"
@@ -149,6 +149,7 @@
                                 android:layout_gravity="center_horizontal"/>
 
                         </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout

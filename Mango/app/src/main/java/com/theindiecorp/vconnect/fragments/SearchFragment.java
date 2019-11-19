@@ -14,7 +14,9 @@ import android.widget.Button;
 import com.google.firebase.database.DatabaseReference;
 import com.theindiecorp.vconnect.AttendeeAdapter;
 import com.theindiecorp.vconnect.R;
+import com.theindiecorp.vconnect.SearchGroupAdapter;
 import com.theindiecorp.vconnect.data.Event;
+import com.theindiecorp.vconnect.data.Group;
 import com.theindiecorp.vconnect.mainFeedRecyclerViewAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,9 +39,11 @@ public class SearchFragment extends Fragment {
 
     mainFeedRecyclerViewAdapter adapter;
     AttendeeAdapter attendeeAdapter;
+    SearchGroupAdapter searchGroupAdapter;
 
     ArrayList<Event> events = new ArrayList<>();
     ArrayList<String> userIds = new ArrayList<>();
+    ArrayList<Group> groups = new ArrayList<>();
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -82,18 +86,26 @@ public class SearchFragment extends Fragment {
         attendeeAdapter = new AttendeeAdapter(new ArrayList<String>(),getContext());
         userRecyclerView.setAdapter(attendeeAdapter);
 
-        final Button showPosts,showUsers;
+        final RecyclerView groupRecyclerView = v.findViewById(R.id.group_recycler);
+        groupRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        searchGroupAdapter = new SearchGroupAdapter(new ArrayList<Group>(),getContext());
+        groupRecyclerView.setAdapter(searchGroupAdapter);
+
+        final Button showPosts,showUsers,showGroups;
 
         showPosts = v.findViewById(R.id.search_view_post_btn);
         showUsers = v.findViewById(R.id.search_view_people_btn);
+        showGroups = v.findViewById(R.id.search_view_group_btn);
 
         showUsers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 recyclerView.setVisibility(View.GONE);
                 userRecyclerView.setVisibility(View.VISIBLE);
-                showPosts.setTextColor(getResources().getColor(android.R.color.black));
+                groupRecyclerView.setVisibility(View.GONE);
                 showUsers.setTextColor(getResources().getColor(R.color.colorAccent));
+                showPosts.setTextColor(getResources().getColor(android.R.color.black));
+                showGroups.setTextColor(getResources().getColor(android.R.color.black));
             }
         });
 
@@ -102,8 +114,22 @@ public class SearchFragment extends Fragment {
             public void onClick(View view) {
                 recyclerView.setVisibility(View.VISIBLE);
                 userRecyclerView.setVisibility(View.GONE);
+                groupRecyclerView.setVisibility(View.GONE);
                 showUsers.setTextColor(getResources().getColor(android.R.color.black));
                 showPosts.setTextColor(getResources().getColor(R.color.colorAccent));
+                showGroups.setTextColor(getResources().getColor(android.R.color.black));
+            }
+        });
+
+        showGroups.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.setVisibility(View.GONE);
+                userRecyclerView.setVisibility(View.GONE);
+                groupRecyclerView.setVisibility(View.VISIBLE);
+                showUsers.setTextColor(getResources().getColor(android.R.color.black));
+                showPosts.setTextColor(getResources().getColor(android.R.color.black));
+                showGroups.setTextColor(getResources().getColor(R.color.colorAccent));
             }
         });
 
@@ -129,6 +155,12 @@ public class SearchFragment extends Fragment {
                         .startAt(query)
                         .endAt(query + "\uf8ff");
                 q1.addValueEventListener(userEventListener);
+
+                Query q2 = FirebaseDatabase.getInstance().getReference("groups")
+                        .orderByChild("name")
+                        .startAt(query)
+                        .endAt(query + "\uf8ff");
+                q2.addValueEventListener(groupEventListener);
                 return false;
             }
 
@@ -145,6 +177,12 @@ public class SearchFragment extends Fragment {
                         .startAt(newText)
                         .endAt(newText + "\uf8ff");
                 q1.addValueEventListener(userEventListener);
+
+                Query q2 = FirebaseDatabase.getInstance().getReference("groups")
+                        .orderByChild("name")
+                        .startAt(newText)
+                        .endAt(newText + "\uf8ff");
+                q2.addValueEventListener(groupEventListener);
                 return false;
             }
         });
@@ -155,6 +193,10 @@ public class SearchFragment extends Fragment {
 
         if(events.isEmpty()){
             databaseReference.child("events").addValueEventListener(valueEventListener);
+        }
+
+        if(groups.isEmpty()){
+            databaseReference.child("groups").addValueEventListener(groupEventListener);
         }
 
         return v;
@@ -191,6 +233,25 @@ public class SearchFragment extends Fragment {
             Collections.reverse(events);
             adapter.setEvents(events);
             adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    ValueEventListener groupEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            groups = new ArrayList<>();
+            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                Group group = snapshot.getValue(Group.class);
+                group.setId(snapshot.getKey());
+                groups.add(group);
+            }
+            searchGroupAdapter.setGroups(groups);
+            searchGroupAdapter.notifyDataSetChanged();
         }
 
         @Override

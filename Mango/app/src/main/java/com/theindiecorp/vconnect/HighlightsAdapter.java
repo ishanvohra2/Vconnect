@@ -82,7 +82,7 @@ public class HighlightsAdapter extends RecyclerView.Adapter<HighlightsAdapter.My
                         for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                             members.add(snapshot.getKey());
                         }
-                        holder.content.setText(members.size() + "Members");
+                        holder.content.setText(members.size() + " Members");
                     }
                 }
 
@@ -93,7 +93,6 @@ public class HighlightsAdapter extends RecyclerView.Adapter<HighlightsAdapter.My
             });
 
             if(group.getUrl()!=null){
-                final BlurTransformation bitmapTransform = new BlurTransformation();
                 StorageReference imageReference = storage.getReference().child(group.getUrl());
                 imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
