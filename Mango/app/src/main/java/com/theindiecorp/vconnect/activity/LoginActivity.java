@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         if (auth.getCurrentUser() != null) {
+            HomeActivity.userId = auth.getCurrentUser().getUid();
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             intent.putExtra("name", auth.getCurrentUser().getDisplayName());
             intent.putExtra("profileImg", auth.getCurrentUser().getPhotoUrl());
@@ -138,6 +139,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void onAuthSuccess(FirebaseUser user) {
         // Go to MainActivity
+
+        HomeActivity.userId = auth.getCurrentUser().getUid();
         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
         intent.putExtra("name", auth.getCurrentUser().getDisplayName());
         startActivity(intent);
