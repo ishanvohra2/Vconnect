@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.theindiecorp.vconnect.fragments.NewEventFragment;
 import com.theindiecorp.vconnect.fragments.NewPostFragment;
 import com.theindiecorp.vconnect.fragments.MainFeedFragment;
 import com.theindiecorp.vconnect.fragments.ProfileFragment;
@@ -31,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     public static final String TAG = "stupid"; // TODO
     public static String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     public static int points;
-    public static String userEmail;
+    public static String postType = "";
     public static String groupId = "";
     String eventIdFromIntent = "";
 
@@ -43,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
     BottomNavigationView navigationView;
 
 
-    private void loadFragment(Fragment fragment) {
+    public void loadFragment(Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.home_frame_container, fragment);
@@ -109,9 +110,19 @@ public class HomeActivity extends AppCompatActivity {
         // added from here
 
 
+        if(groupId.isEmpty() && postType.isEmpty()){
+            loadFragment(new MainFeedFragment());
+        }
+        else if(postType.equals("post")){
+            loadFragment(new NewPostFragment());
+        }
+        else{
+            loadFragment(new NewEventFragment());
+        }
+
+
         navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(listener);
-        loadFragment(new MainFeedFragment());
 
         // ended here
 

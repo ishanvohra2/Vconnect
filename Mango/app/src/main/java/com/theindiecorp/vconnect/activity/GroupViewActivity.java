@@ -1,5 +1,6 @@
 package com.theindiecorp.vconnect.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +46,7 @@ public class GroupViewActivity extends AppCompatActivity {
     mainFeedRecyclerViewAdapter mainFeedAdapter;
 
     ArrayList<Event> events = new ArrayList<>();
+    Group group = new Group();
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -53,6 +57,7 @@ public class GroupViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_view);
 
         groupId = getIntent().getStringExtra("groupId");
+        HomeActivity.userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         groupNametV = findViewById(R.id.profile_display_name_tv);
         groupDescriptionTv = findViewById(R.id.profile_description_tv);
@@ -71,10 +76,12 @@ public class GroupViewActivity extends AppCompatActivity {
         databaseReference.child("groups").child(groupId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Group group = dataSnapshot.getValue(Group.class);
-                groupNametV.setText(group.getName());
-                groupDescriptionTv.setText(group.getGroupDescription());
-                membersTv.setText(group.getMembers().size() + "");
+                group = dataSnapshot.getValue(Group.class);
+                if(group!=null){
+                    groupNametV.setText(group.getName());
+                    groupDescriptionTv.setText(group.getGroupDescription());
+                    membersTv.setText(group.getMembers().size() + "");
+                }
 
                 if(group.getUrl()!=null){
                     StorageReference imageReference = storage.getReference().child(group.getUrl());
@@ -92,6 +99,26 @@ public class GroupViewActivity extends AppCompatActivity {
                             Log.d(HomeActivity.TAG, exception.getMessage());
                         }
                     });
+                }
+
+                if(group.getAdminId().equals(HomeActivity.userId)){
+                    editInfoBtn.setVisibility(View.VISIBLE);
+                    joinGroupBtn.setVisibility(View.GONE);
+                }
+                else
+                    editInfoBtn.setVisibility(View.GONE);
+
+                if(group.getMembers().contains(HomeActivity.userId)){
+                    createPostBtn.setVisibility(View.VISIBLE);
+                    joinGroupBtn.setText("Leave Group");
+                    joinGroupBtn.setTextColor(getResources().getColor(android.R.color.black));
+                    joinGroupBtn.setBackground(getDrawable(R.drawable.button_background_stroke));
+                }
+                else{
+                    createPostBtn.setVisibility(View.GONE);
+                    joinGroupBtn.setText("Join");
+                    joinGroupBtn.setTextColor(getResources().getColor(android.R.color.white));
+                    joinGroupBtn.setBackground(getDrawable(R.drawable.button_round_background_green));
                 }
             }
 
@@ -121,6 +148,39 @@ public class GroupViewActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        createPostBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HomeActivity.groupId = groupId;
+                HomeActivity.postType = "post";
+                startActivity(new Intent(GroupViewActivity.this,HomeActivity.class));
+
+            }
+        });
+
+        editInfoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(GroupViewActivity.this,EditGroupInfoActivity.class).putExtra("groupId",groupId));
+            }
+        });
+
+        joinGroupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(group.getMembers().contains(HomeActivity.userId)){
+                    joinGroupBtn.setText("Leave");
+                    joinGroupBtn.setBackground(getDrawable(R.drawable.button_background_stroke));
+                    joinGroupBtn.setTextColor(getResources().getColor(android.R.color.black));
+                }
+                else {
+                    joinGroupBtn.setText("Join");
+                    joinGroupBtn.setBackground(getDrawable(R.drawable.button_round_background_green));
+                    joinGroupBtn.setTextColor(getResources().getColor(android.R.color.white));
+                }
             }
         });
 

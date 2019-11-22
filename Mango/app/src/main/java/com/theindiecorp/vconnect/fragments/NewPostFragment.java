@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.places.Place;
@@ -32,6 +33,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theindiecorp.vconnect.GroupSearchItemRecycler;
 import com.theindiecorp.vconnect.R;
+import com.theindiecorp.vconnect.SearchGroupAdapter;
+import com.theindiecorp.vconnect.activity.GroupSearchActivity;
 import com.theindiecorp.vconnect.activity.HomeActivity;
 import com.theindiecorp.vconnect.data.Event;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,20 +51,15 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class NewPostFragment extends Fragment {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     int PLACE_PICKER_REQUEST = 12;
-    Uri imgUri;
     private static final int PICK_IMAGE = 100;
     ImageView image;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     EditText articleText;
-    SearchView searchView;
-    RecyclerView recyclerView;
-
-    GroupSearchItemRecycler groupAdapter;
+    TextView searchGroupTv, groupNameTv;
+    Button removeBtn;
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     public NewPostFragment() {
         // Required empty public constructor
@@ -77,12 +75,51 @@ public class NewPostFragment extends Fragment {
 
         articleText = v.findViewById(R.id.article_text);
         image = v.findViewById(R.id.new_article_main_image);
-        searchView = v.findViewById(R.id.article_tag);
-        recyclerView = v.findViewById(R.id.group_recycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        searchGroupTv = v.findViewById(R.id.search_group_tv);
+        groupNameTv = v.findViewById(R.id.group_name_tv);
+        removeBtn = v.findViewById(R.id.remove_btn);
 
-        groupAdapter = new GroupSearchItemRecycler(getContext(),new ArrayList<String>());
-        recyclerView.setAdapter(groupAdapter);
+        removeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HomeActivity.groupId = "";
+                groupNameTv.setText("your timeline");
+                removeBtn.setVisibility(View.GONE);
+            }
+        });
+
+        searchGroupTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), GroupSearchActivity.class).putExtra("type","post"));
+            }
+        });
+
+        groupNameTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), GroupSearchActivity.class).putExtra("type","post"));
+            }
+        });
+
+        if(!HomeActivity.groupId.isEmpty()){
+            removeBtn.setVisibility(View.VISIBLE);
+            databaseReference.child("groups").child(HomeActivity.groupId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    groupNameTv.setText(dataSnapshot.child("name").getValue(String.class));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+        else{
+            groupNameTv.setText("your timeline");
+            removeBtn.setVisibility(View.GONE);
+        }
 
         Button moveToEventBtn = v.findViewById(R.id.share_event_btn);
         moveToEventBtn.setOnClickListener(new View.OnClickListener() {
@@ -124,51 +161,9 @@ public class NewPostFragment extends Fragment {
 
             }
         });
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String queryText) {
-                Query query = FirebaseDatabase.getInstance().getReference("groups")
-                        .orderByChild("name").startAt(queryText).endAt(queryText + "\uf8ff");
-                query.addValueEventListener(groupListener);
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Query query = FirebaseDatabase.getInstance().getReference("groups")
-                        .orderByChild("name").startAt(newText).endAt(newText + "\uf8ff");
-                query.addValueEventListener(groupListener);
-
-                return false;
-            }
-        });
-
         return v;
 
     }
-
-    ValueEventListener groupListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            ArrayList<String> groupIds = new ArrayList<>();
-            if(dataSnapshot.exists()){
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Group group = snapshot.getValue(Group.class);
-                    if(group.getAdminId().equals(HomeActivity.userId))
-                        groupIds.add(group.getId());
-                }
-                groupAdapter.setGroupIds(groupIds);
-                groupAdapter.notifyDataSetChanged();
-            }
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-        }
-    };
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
@@ -239,6 +234,8 @@ public class NewPostFragment extends Fragment {
             databaseReference.child("users").child(event.getHostId()).child("points").setValue(userPoints + 5);
             Toast.makeText(getContext(), "5 Points Rewarded!", Toast.LENGTH_LONG).show();
 
+            HomeActivity.groupId = "";
+            startActivity(new Intent(getContext(), HomeActivity.class));
         } else {
             Toast.makeText(getContext(), "You should enter some text first", Toast.LENGTH_LONG).show();
         }

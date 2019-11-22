@@ -11,8 +11,14 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.GroupViewActivity"
+        <activity android:name=".activity.EditGroupInfoActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.GroupSearchActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.GroupViewActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.InboxActivity"
             android:theme="@style/AppTheme.NoActionBar" />

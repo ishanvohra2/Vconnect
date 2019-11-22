@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
-                android:text="Add Group"
+                android:text="Edit Group Info"
                 android:textColor="@android:color/black"
                 android:textSize="25sp"
                 android:layout_weight="1"/>
@@ -84,7 +84,7 @@
                         <ImageView
                             android:id="@+id/group_image"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="150dp"
                             android:layout_margin="12dp"
                             android:maxHeight="220dp"
                             android:background="@drawable/rounded_box"
@@ -128,6 +128,14 @@
                         android:minLines="5"
                         android:padding="12dp" />
 
+                    <Button
+                        android:id="@+id/delete_group_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_background_stroke"
+                        android:text="DELETE"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:layout_margin="12dp"/>
 
                 </LinearLayout>
 
@@ -143,7 +151,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
         android:minHeight="52dp"
-        android:text="Create"
+        android:text="SAVE"
         android:textColor="@android:color/white"
         android:layout_alignParentBottom="true"/>
 

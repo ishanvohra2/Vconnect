@@ -1,6 +1,7 @@
 package com.theindiecorp.vconnect;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.theindiecorp.vconnect.activity.HomeActivity;
+import com.theindiecorp.vconnect.fragments.NewPostFragment;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ public class GroupSearchItemRecycler extends RecyclerView.Adapter<GroupSearchIte
     private Context context;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private ArrayList<String> dataSet;
+    private String postType;
 
     public int setGroupIds(ArrayList<String> dataSet){
         this.dataSet = dataSet;
@@ -37,9 +40,10 @@ public class GroupSearchItemRecycler extends RecyclerView.Adapter<GroupSearchIte
         }
     }
 
-    public GroupSearchItemRecycler(Context context, ArrayList<String> dataSet){
+    public GroupSearchItemRecycler(Context context, ArrayList<String> dataSet, String postType){
         this.dataSet = dataSet;
         this.context = context;
+        this.postType = postType;
     }
 
     @NonNull
@@ -72,6 +76,8 @@ public class GroupSearchItemRecycler extends RecyclerView.Adapter<GroupSearchIte
             @Override
             public void onClick(View view) {
                 HomeActivity.groupId = groupId;
+                HomeActivity.postType = postType;
+                context.startActivity(new Intent(context,HomeActivity.class));
             }
         });
 

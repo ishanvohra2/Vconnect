@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -84,6 +85,47 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginTop="8dp">
+
+                        <TextView
+                            android:id="@+id/search_group_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="5dp"
+                            android:fontFamily="sans-serif-light"
+                            android:text="Share on..."
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/group_name_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="your timeline"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="16sp"
+                            android:layout_weight="1"
+                            android:textAlignment="textStart"
+                            android:layout_gravity="center"/>
+
+                        <Button
+                            android:id="@+id/remove_btn"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:background="@drawable/close"
+                            android:layout_marginEnd="8dp"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="match_parent"

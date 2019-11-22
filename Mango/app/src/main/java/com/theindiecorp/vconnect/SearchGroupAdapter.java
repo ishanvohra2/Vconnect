@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,8 +29,6 @@ import com.theindiecorp.vconnect.activity.HomeActivity;
 import com.theindiecorp.vconnect.data.Group;
 
 import java.util.ArrayList;
-
-import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class SearchGroupAdapter extends RecyclerView.Adapter<SearchGroupAdapter.MyViewHolder> {
 
@@ -123,14 +120,14 @@ public class SearchGroupAdapter extends RecyclerView.Adapter<SearchGroupAdapter.
             @Override
             public void onClick(View view) {
                 if(group.getMembers().contains(HomeActivity.userId)){
-                    holder.followBtn.setText("Unfollow");
+                    holder.followBtn.setText("Leave");
                     holder.followBtn.setBackground(context.getDrawable(R.drawable.button_background_stroke));
                     holder.followBtn.setTextColor(context.getResources().getColor(android.R.color.black));
                     group.getMembers().remove(HomeActivity.userId);
                     databaseReference.child("groups").child(group.getId()).child("members").setValue(group.getMembers());
                 }
                 else {
-                    holder.followBtn.setText("Follow");
+                    holder.followBtn.setText("Join");
                     holder.followBtn.setBackground(context.getDrawable(R.drawable.button_round_background_green));
                     holder.followBtn.setTextColor(context.getResources().getColor(android.R.color.white));
                     group.getMembers().add(HomeActivity.userId);
@@ -147,12 +144,12 @@ public class SearchGroupAdapter extends RecyclerView.Adapter<SearchGroupAdapter.
         });
 
         if(group.getMembers().contains(HomeActivity.userId)){
-            holder.followBtn.setText("Unfollow");
+            holder.followBtn.setText("Leave");
             holder.followBtn.setBackground(context.getDrawable(R.drawable.button_background_stroke));
             holder.followBtn.setTextColor(context.getResources().getColor(android.R.color.black));
         }
         else {
-            holder.followBtn.setText("Follow");
+            holder.followBtn.setText("Join");
             holder.followBtn.setBackground(context.getDrawable(R.drawable.button_round_background_green));
             holder.followBtn.setTextColor(context.getResources().getColor(android.R.color.white));
         }

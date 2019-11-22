@@ -44,6 +44,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theindiecorp.vconnect.R;
+import com.theindiecorp.vconnect.activity.GroupSearchActivity;
 import com.theindiecorp.vconnect.activity.HomeActivity;
 import com.theindiecorp.vconnect.activity.NewEventActivity;
 import com.theindiecorp.vconnect.data.Event;
@@ -61,10 +62,11 @@ public class NewEventFragment extends Fragment {
     private EditText eventName, eventDescription;
     private Button addBtn, addImg;
     private ImageView image;
-    Uri imgUri;
     private static final int PICK_IMAGE = 100;
     private EditText totalSpots,locationEt;
+    TextView searchGroupTv, groupNameTv;
     private TextView eventDate, eventTime;
+    Button removeBtn;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -72,10 +74,6 @@ public class NewEventFragment extends Fragment {
     DatabaseReference mDatabase;
 
     int PLACE_PICKER_REQUEST = 12;
-
-    ArrayList<String> schoolIds = new ArrayList<>();
-    String venue,venueId;
-    final List<String> schools = new ArrayList<>();
     int userPoints;
 
     @Nullable
@@ -94,6 +92,52 @@ public class NewEventFragment extends Fragment {
         eventDate = view.findViewById(R.id.dateText);
         eventTime = view.findViewById(R.id.new_event_time_tv);
         locationEt = view.findViewById(R.id.new_event_location_tv);
+        searchGroupTv = view.findViewById(R.id.search_group_tv);
+        groupNameTv = view.findViewById(R.id.group_name_tv);
+        removeBtn = view.findViewById(R.id.remove_btn);
+
+        removeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HomeActivity.groupId = "";
+                groupNameTv.setText("your timeline");
+                removeBtn.setVisibility(View.GONE);
+            }
+        });
+
+        searchGroupTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), GroupSearchActivity.class).putExtra("type","event"));
+            }
+        });
+
+        groupNameTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), GroupSearchActivity.class).putExtra("type","event"));
+            }
+        });
+
+        if(!HomeActivity.groupId.isEmpty()){
+            removeBtn.setVisibility(View.VISIBLE);
+            mDatabase.child("groups").child(HomeActivity.groupId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    groupNameTv.setText(dataSnapshot.child("name").getValue(String.class));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+        else{
+            groupNameTv.setText("your timeline");
+            removeBtn.setVisibility(View.GONE);
+        }
+
 
         Button moveToArticleBtn = view.findViewById(R.id.share_article_btn);
         moveToArticleBtn.setOnClickListener(new View.OnClickListener() {
@@ -267,6 +311,9 @@ public class NewEventFragment extends Fragment {
             mDatabase.child("events").child(id).setValue(event);
             mDatabase.child("users").child(event.getHostId()).child("points").setValue(userPoints + 5);
             Toast.makeText(getContext(), "5 Points Rewarded!", Toast.LENGTH_LONG).show();
+
+            HomeActivity.groupId = "";
+            startActivity(new Intent(getContext(), HomeActivity.class));
         } else {
             Toast.makeText(getContext(), "You should enter a Event Name", Toast.LENGTH_LONG).show();
         }
