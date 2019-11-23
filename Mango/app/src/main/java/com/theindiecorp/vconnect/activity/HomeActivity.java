@@ -110,13 +110,13 @@ public class HomeActivity extends AppCompatActivity {
         // added from here
 
 
-        if(groupId.isEmpty() && postType.isEmpty()){
+        if(groupId.isEmpty() || postType.isEmpty()){
             loadFragment(new MainFeedFragment());
         }
         else if(postType.equals("post")){
             loadFragment(new NewPostFragment());
         }
-        else{
+        else if(postType.equals("post")){
             loadFragment(new NewEventFragment());
         }
 

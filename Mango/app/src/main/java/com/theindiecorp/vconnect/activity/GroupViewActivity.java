@@ -81,44 +81,44 @@ public class GroupViewActivity extends AppCompatActivity {
                     groupNametV.setText(group.getName());
                     groupDescriptionTv.setText(group.getGroupDescription());
                     membersTv.setText(group.getMembers().size() + "");
-                }
 
-                if(group.getUrl()!=null){
-                    StorageReference imageReference = storage.getReference().child(group.getUrl());
-                    imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            Glide.with(GroupViewActivity.this)
-                                    .load(uri)
-                                    .into(profileImage);
-                            profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Log.d(HomeActivity.TAG, exception.getMessage());
-                        }
-                    });
-                }
+                    if(group.getUrl()!=null){
+                        StorageReference imageReference = storage.getReference().child(group.getUrl());
+                        imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(getApplicationContext())
+                                        .load(uri)
+                                        .into(profileImage);
+                                profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Log.d(HomeActivity.TAG, exception.getMessage());
+                            }
+                        });
+                    }
 
-                if(group.getAdminId().equals(HomeActivity.userId)){
-                    editInfoBtn.setVisibility(View.VISIBLE);
-                    joinGroupBtn.setVisibility(View.GONE);
-                }
-                else
-                    editInfoBtn.setVisibility(View.GONE);
+                    if(group.getMembers().contains(HomeActivity.userId)){
+                        createPostBtn.setVisibility(View.VISIBLE);
+                        joinGroupBtn.setText("Leave");
+                        joinGroupBtn.setTextColor(getResources().getColor(android.R.color.black));
+                        joinGroupBtn.setBackground(getDrawable(R.drawable.button_background_stroke));
+                    }
+                    else{
+                        createPostBtn.setVisibility(View.GONE);
+                        joinGroupBtn.setText("Join");
+                        joinGroupBtn.setTextColor(getResources().getColor(android.R.color.white));
+                        joinGroupBtn.setBackground(getDrawable(R.drawable.button_round_background_green));
+                    }
 
-                if(group.getMembers().contains(HomeActivity.userId)){
-                    createPostBtn.setVisibility(View.VISIBLE);
-                    joinGroupBtn.setText("Leave Group");
-                    joinGroupBtn.setTextColor(getResources().getColor(android.R.color.black));
-                    joinGroupBtn.setBackground(getDrawable(R.drawable.button_background_stroke));
-                }
-                else{
-                    createPostBtn.setVisibility(View.GONE);
-                    joinGroupBtn.setText("Join");
-                    joinGroupBtn.setTextColor(getResources().getColor(android.R.color.white));
-                    joinGroupBtn.setBackground(getDrawable(R.drawable.button_round_background_green));
+                    if(group.getAdminId().equals(HomeActivity.userId)){
+                        editInfoBtn.setVisibility(View.VISIBLE);
+                        joinGroupBtn.setVisibility(View.GONE);
+                    }
+                    else
+                        editInfoBtn.setVisibility(View.GONE);
                 }
             }
 
@@ -141,8 +141,8 @@ public class GroupViewActivity extends AppCompatActivity {
                     }
                     mainFeedAdapter.setEvents(events);
                     mainFeedAdapter.notifyDataSetChanged();
-                    postsTv.setText(events.size() + "");
                 }
+                postsTv.setText(events.size() + "");
             }
 
             @Override
@@ -171,15 +171,18 @@ public class GroupViewActivity extends AppCompatActivity {
         joinGroupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(group.getMembers().contains(HomeActivity.userId)){
+                if (group.getMembers().contains(HomeActivity.userId)) {
                     joinGroupBtn.setText("Leave");
                     joinGroupBtn.setBackground(getDrawable(R.drawable.button_background_stroke));
                     joinGroupBtn.setTextColor(getResources().getColor(android.R.color.black));
-                }
-                else {
+                    group.getMembers().remove(HomeActivity.userId);
+                    databaseReference.child("groups").child(group.getId()).child("members").setValue(group.getMembers());
+                } else {
                     joinGroupBtn.setText("Join");
                     joinGroupBtn.setBackground(getDrawable(R.drawable.button_round_background_green));
                     joinGroupBtn.setTextColor(getResources().getColor(android.R.color.white));
+                    group.getMembers().add(HomeActivity.userId);
+                    databaseReference.child("groups").child(group.getId()).child("members").setValue(group.getMembers());
                 }
             }
         });
